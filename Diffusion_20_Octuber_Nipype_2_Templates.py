@@ -6,7 +6,7 @@
 # the second template is the waxholm FA template
 # Here all the subjects are converted into nifti from 2dseq and skull manually stripped using itksnap
 # it is worth mentioneing that after manually drawing the skull, I need to rotate the mask to match the orignal image orientation
-
+# the script was stopped in after fitting the tenosr to use the FA maps to generate the Study based template
 
 
 from nipype import config
@@ -98,7 +98,7 @@ acqparams = '/media/amr/HDD/Work/October_Acquistion/acqparams.txt'
 index =  '/media/amr/HDD/Work/October_Acquistion/index_20.txt'
 
 VBM_DTI_Template = '/media/amr/HDD/Work/October_Acquistion/VBM_DTI.nii.gz'
-Wax_FA_Template = '/media/amr/HDD/Work/standard/FMRIB58_FA_2mm.nii.gz'
+Wax_FA_Template = '/media/amr/HDD/Work/standard/FMRIB58_FA_2mm.nii.gz' # downsampled
 Study_Template = '/media/amr/HDD/Work/October_Acquistion/FA_Template_Cluster.nii.gz'
 #-----------------------------------------------------------------------------------------------------
 # In[7]:

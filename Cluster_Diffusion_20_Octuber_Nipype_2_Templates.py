@@ -1,12 +1,14 @@
 #-----------------------------------------------------------------------------------------------------
-# In[2]:
-#This is an alternative script to process diffusion data
-#The key concept here from Diffusion_20_Octuber_Nipype is to register B0 to anatomical image
-#Then use the transformation from resting state preprocessing to transfer the images to anatomical images
-#The registration with FA_template was horrible
-#This script was done after restripping the skull to remove extra parts of the skull
-#The overlap with the VBM template is quite good, yet not so satifactory
-#So, here I am trying with the WAX FA template downsized to 2mm
+# In[1]:
+# processing the diffusion data frm October_2017 acquistion
+# this script is for processing the 1000, 20 directions shell
+# I use two templates, study based FA template based on all the FA subjects
+# the second template is the waxholm FA template
+# Here all the subjects are converted into nifti from 2dseq and skull manually stripped using itksnap
+# it is worth mentioneing that after manually drawing the skull, I need to rotate the mask to match the orignal image orientation
+# the script was stopped in after fitting the tenosr to use the FA maps to generate the Study based template
+
+
 from nipype import config
 cfg = dict(execution={'remove_unnecessary_outputs': False})
 config.update_config(cfg)
@@ -30,15 +32,15 @@ import matplotlib.pyplot as plt
 #-----------------------------------------------------------------------------------------------------
 # In[2]:
 
-experiment_dir = '/home/in/aeed/Work/October_Acquistion/' 
+experiment_dir = '/home/in/aeed/Work/October_Acquistion/'
 
-subject_list = ['229', '230', '232', '233', 
-                '234', '235', '237', '242', 
-                '243', '244', '245', '252', 
-                '253', '255', '261', '262', 
-                '263', '264', '273', '274', 
-                '281', '282', '286', '287', 
-                '362', '363', '364', '365', 
+subject_list = ['229', '230', '232', '233',
+                '234', '235', '237', '242',
+                '243', '244', '245', '252',
+                '253', '255', '261', '262',
+                '263', '264', '273', '274',
+                '281', '282', '286', '287',
+                '362', '363', '364', '365',
                 '366']
 
 
@@ -90,7 +92,7 @@ datasink.inputs.substitutions = substitutions
 # In[6]:
 bval =  '/home/in/aeed/Work/October_Acquistion/bval_20'
 bvec =  '/home/in/aeed/Work/October_Acquistion/bvec_20'
-acqparams = '/home/in/aeed/Work/October_Acquistion/acqparams.txt'  
+acqparams = '/home/in/aeed/Work/October_Acquistion/acqparams.txt'
 index =  '/home/in/aeed/Work/October_Acquistion/index_20.txt'
 
 VBM_DTI_Template = '/home/in/aeed/Work/October_Acquistion/VBM_DTI.nii.gz'
