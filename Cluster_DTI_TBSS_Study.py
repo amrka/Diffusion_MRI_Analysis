@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 #-----------------------------------------------------------------------------------------------------
 # In[2]:
 
-experiment_dir = '/home/in/aeed/TBSS' 
+experiment_dir = '/home/in/aeed/TBSS'
 
 
 map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
@@ -121,15 +121,15 @@ randomise_tbss.inputs.base_name = 'TBSS_'
 #-----------------------------------------------------------------------------------------------------
 #smoothing the images
 def nilearn_smoothing(image):
-    import nilearn 
+    import nilearn
     from nilearn.image import smooth_img
 
     import numpy as np
     import os
-    kernel = [4,4,8]
+    kernel = [3,3,0]
 
     #kernel = [4.3,4.3,16]
-    
+
 
 
 
@@ -150,7 +150,7 @@ nilearn_smoothing = Node(name = 'nilearn_smoothing',
 #-----------------------------------------------------------------------------------------------------
 #mask only FA values > 0.2 to gurantee it is WM
 thresh_FA = Node(fsl.Threshold(), name = 'thresh_FA')
-thresh_FA.inputs.thresh = 0.2	
+thresh_FA.inputs.thresh = 0.2
 
 
 #-----------------------------------------------------------------------------------------------------
@@ -182,9 +182,9 @@ DTI_TBSS_Study.connect ([
       (selectfiles, nilearn_smoothing, [('all_image','image')]),
 
       (nilearn_smoothing, randomise_VBA, [('smoothed_output','in_file')]),
-     
+
      (selectfiles, thresh_FA, [('mean_FA','in_file')]),
-     (thresh_FA, binarize_FA, [('out_file','in_file')]), 
+     (thresh_FA, binarize_FA, [('out_file','in_file')]),
      (binarize_FA, randomise_VBA, [('out_file','mask')])
 
 
