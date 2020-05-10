@@ -24,19 +24,19 @@ from nipype.interfaces.matlab import MatlabCommand
 #-----------------------------------------------------------------------------------------------------
 # In[2]:
 
-experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/' 
+experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
 
-# subject_list = ['229', '230', '232', '233', 
-#                 '234', '235', '237', '242', 
-#                 '243', '244', '245', '252', 
-#                 '253', '255', '261', '262', 
-#                 '263', '264', '273', '274', 
-#                 '281', '282', '286', '287', 
-#                 '362', '363', '364', '365', 
+# subject_list = ['229', '230', '232', '233',
+#                 '234', '235', '237', '242',
+#                 '243', '244', '245', '252',
+#                 '253', '255', '261', '262',
+#                 '263', '264', '273', '274',
+#                 '281', '282', '286', '287',
+#                 '362', '363', '364', '365',
 #                 '366']
 
 # subject_list = ['229', '230', '365', '274']
-                
+
 subject_list = ['230', '365']
 
 
@@ -88,7 +88,7 @@ datasink.inputs.substitutions = substitutions
 bval = '/media/amr/HDD/Work/October_Acquistion/bval_multishell'
 bvec = '/media/amr/HDD/Work/October_Acquistion/bvec_multishell'
 index = '/media/amr/HDD/Work/October_Acquistion/index_multishell'
-acqparams = '/media/amr/HDD/Work/October_Acquistion/acqparams.txt' 
+acqparams = '/media/amr/HDD/Work/October_Acquistion/acqparams.txt'
 protocol = '/media/amr/HDD/Work/October_Acquistion/MDT_multishell_protocol.prtcl'
 
 Wax_FA_Template = '/media/amr/HDD/Work/standard/FMRIB58_FA_2mm.nii.gz'
@@ -166,6 +166,7 @@ def Kurtosis(dwi, mask):
 		MD = dkifit.md
 		AD = dkifit.ad
 		RD = dkifit.rd
+		KA = dkifit.kfa
 
 		MK = dkifit.mk(0, 3)
 		AK = dkifit.ak(0, 3)
@@ -176,6 +177,7 @@ def Kurtosis(dwi, mask):
 		save_nifti('DKI_MD.nii', MD, affine)
 		save_nifti('DKI_AD.nii', AD, affine)
 		save_nifti('DKI_RD.nii', RD, affine)
+		save_nifti('DKI_KA.nii', KA, affine)
 
 		save_nifti('DKI_MK.nii', MK, affine)
 		save_nifti('DKI_AK.nii', AK, affine)
@@ -185,6 +187,7 @@ def Kurtosis(dwi, mask):
 		DKI_MD = os.path.abspath('DKI_MD.nii')
 		DKI_AD = os.path.abspath('DKI_AD.nii')
 		DKI_RD = os.path.abspath('DKI_RD.nii')
+		DKI_KA = os.path.abspath('DKI_KA.nii')
 
 		DKI_MK = os.path.abspath('DKI_MK.nii')
 		DKI_AK = os.path.abspath('DKI_AK.nii')
@@ -204,13 +207,13 @@ def Kurtosis(dwi, mask):
 		DKI_AWF = os.path.abspath('DKI_AWF.nii')
 		DKI_TORT = os.path.abspath('DKI_TORT.nii')
 
-		return  DKI_FA, DKI_MD, DKI_AD, DKI_RD, DKI_MK, DKI_AK, DKI_RK, DKI_AWF, DKI_TORT
+		return  DKI_FA, DKI_MD, DKI_AD, DKI_RD, DKI_KA, DKI_MK, DKI_AK, DKI_RK, DKI_AWF, DKI_TORT
 
 
 
 Kurtosis = Node(name = 'Kurtosis',
                   interface = Function(input_names = ['dwi','mask'],
-                  					   output_names = ['DKI_FA', 'DKI_MD', 'DKI_AD', 'DKI_RD', 'DKI_MK', 'DKI_AK', 'DKI_RK', 'DKI_AWF', 'DKI_TORT'],
+                  					   output_names = ['DKI_FA', 'DKI_MD', 'DKI_AD', 'DKI_RD', 'DKI_KA', 'DKI_MK', 'DKI_AK', 'DKI_RK', 'DKI_AWF', 'DKI_TORT'],
                   function = Kurtosis))
 
 
@@ -272,6 +275,10 @@ antsApplyAD_WAX.inputs.output_image = 'AD_{subject_id}.nii'
 #>>>>>>>>>>>>>>>>>>>>>>>>>RD
 antsApplyRD_WAX = antsApplyMD_WAX.clone(name = 'antsApplyRD_WAX')
 antsApplyRD_WAX.inputs.output_image = 'RD_{subject_id}.nii'
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>KA
+antsApplyKA_WAX = antsApplyMD_WAX.clone(name = 'antsApplyKA_WAX')
+antsApplyKA_WAX.inputs.output_image = 'KA_{subject_id}.nii'
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>AK
 antsApplyAK_WAX = antsApplyMD_WAX.clone(name = 'antsApplyAK_WAX')
@@ -357,6 +364,10 @@ antsApplyAD_Study.inputs.output_image = 'AD_{subject_id}.nii'
 antsApplyRD_Study = antsApplyMD_Study.clone(name = 'antsApplyRD_Study')
 antsApplyRD_Study.inputs.output_image = 'RD_{subject_id}.nii'
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>KA
+antsApplyKA_Study = antsApplyMD_Study.clone(name = 'antsApplyKA_Study')
+antsApplyKA_Study.inputs.output_image = 'KA_{subject_id}.nii'
+
 #>>>>>>>>>>>>>>>>>>>>>>>>>AK
 antsApplyAK_Study = antsApplyMD_Study.clone(name = 'antsApplyAK_Study')
 antsApplyAK_Study.inputs.output_image = 'AK_{subject_id}.nii'
@@ -405,6 +416,9 @@ Multishell_workflow.connect ([
       (Kurtosis, antsApplyRD_WAX, [('DKI_RD','input_image')]),
       (FA_to_WAX_Temp, antsApplyRD_WAX,[('composite_transform','transforms')]),
 
+      (Kurtosis, antsApplyKA_WAX, [('DKI_KA','input_image')]),
+      (FA_to_WAX_Temp, antsApplyKA_WAX,[('composite_transform','transforms')]),
+
 
       (Kurtosis, antsApplyAK_WAX, [('DKI_AK','input_image')]),
       (FA_to_WAX_Temp, antsApplyAK_WAX,[('composite_transform','transforms')]),
@@ -422,7 +436,7 @@ Multishell_workflow.connect ([
       (FA_to_WAX_Temp, antsApplyAWF_WAX,[('composite_transform','transforms')]),
 
 
-      (Kurtosis, antsApplyTORT_WAX, [('DKI_TORT','input_image')]),	
+      (Kurtosis, antsApplyTORT_WAX, [('DKI_TORT','input_image')]),
       (FA_to_WAX_Temp, antsApplyTORT_WAX,[('composite_transform','transforms')]),
 #-----------------------------------------------------------------------------------------------
       (Kurtosis, FA_to_Study_Temp, [('DKI_FA','moving_image')]),
@@ -437,6 +451,10 @@ Multishell_workflow.connect ([
 
       (Kurtosis, antsApplyRD_Study, [('DKI_RD','input_image')]),
       (FA_to_Study_Temp, antsApplyRD_Study,[('composite_transform','transforms')]),
+
+      (Kurtosis, antsApplyKA_Study, [('DKI_KA','input_image')]),
+      (FA_to_Study_Temp, antsApplyKA_Study,[('composite_transform','transforms')]),
+
 
       (Kurtosis, antsApplyAK_Study, [('DKI_AK','input_image')]),
       (FA_to_Study_Temp, antsApplyAK_Study,[('composite_transform','transforms')]),
@@ -460,4 +478,3 @@ Multishell_workflow.connect ([
 
 Multishell_workflow.write_graph(graph2use='flat')
 Multishell_workflow.run('MultiProc', plugin_args={'n_procs': 8})
-
