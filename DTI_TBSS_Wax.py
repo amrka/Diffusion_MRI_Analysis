@@ -32,15 +32,15 @@ MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
 #-----------------------------------------------------------------------------------------------------
 # In[2]:
 
-experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat' 
+experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat'
 
 map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
 
 
                 'Diffusion_20_AD' , 'Diffusion_20_FA',  'Diffusion_20_MD' , 'Diffusion_20_RD',
 
-                'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_TORT',
-                'Kurtosis_AK' , 'Kurtosis_FA' ,  'Kurtosis_MK' , 'Kurtosis_RK',
+                'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_KA',
+                'Kurtosis_AK' , 'Kurtosis_FA'  , 'Kurtosis_MK' , 'Kurtosis_RK' , 'Kurtosis_TORT',
 
 
                 'NODDI_FICVF' , 'NODDI_ODI'
@@ -118,13 +118,14 @@ randomise_tbss.inputs.base_name = 'TBSS_'
 #-----------------------------------------------------------------------------------------------------
 #smoothing the images
 def nilearn_smoothing(image):
-    import nilearn 
+    import nilearn
     from nilearn.image import smooth_img
 
     import numpy as np
     import os
 
-    kernel = [4.3,4.3,16]
+    # kernel = [4.3,4.3,16]
+    kernel = [3,3,3]
 
 
 
