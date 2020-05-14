@@ -117,6 +117,12 @@ eddy.inputs.ref_num = 0
 
 #-----------------------------------------------------------------------------------------------------
 # In[8]
+# I decided to use RESTORE (non-linear algorithm) to fit the kurtosis tensor here instead of the default (WLS, linear)
+# You will find: /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis_WLS
+# as well as   : /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Kurtosis_FA_WLS
+#for all map_list
+# in the processing workingdir, there is only one copy, the RESTORE
+# the folders without _WLS suffix are done using RESTORE
 def Kurtosis(dwi, mask):
 		import numpy as np
 		import dipy.reconst.dki as dki
@@ -131,6 +137,7 @@ def Kurtosis(dwi, mask):
 		from dipy.core.gradients import gradient_table
 		from dipy.io import read_bvals_bvecs
 		from sklearn import preprocessing
+        import dipy.denoise.noise_estimate as ne   # determine the noise needed for RESTORE
 		import os
 
 
@@ -157,8 +164,10 @@ def Kurtosis(dwi, mask):
 			bvec = preprocessing.normalize(bvec, norm ='l2')
 			gtab = gradient_table(bval, bvec, big_delta=Delta, small_delta=delta, b0_threshold=0,atol=0.01)
 
+		sigma = ne.estimate_sigma(data)
+	   # dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='WLS') the old way also the default
+        dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='RESTORE', sigma=sigma)
 
-		dkimodel = dki.DiffusionKurtosisModel(gtab)
 
 		dkifit = dkimodel.fit(data, mask=mask)
 
