@@ -26,22 +26,22 @@ from nipype.interfaces.matlab import MatlabCommand
 
 experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
 
-# subject_list = ['229', '230', '232', '233',
-#                 '234', '235', '237', '242',
-#                 '243', '244', '245', '252',
-#                 '253', '255', '261', '262',
-#                 '263', '264', '273', '274',
-#                 '281', '282', '286', '287',
-#                 '362', '363', '364', '365',
-#                 '366']
+subject_list = ['229', '230', '232', '233',
+                '234', '235', '237', '242',
+                '243', '244', '245', '252',
+                '253', '255', '261', '262',
+                '263', '264', '273', '274',
+                '281', '282', '286', '287',
+                '362', '363', '364', '365',
+                '366']
 
 # subject_list = ['229', '230', '365', '274']
 
-subject_list = ['230', '365']
+# subject_list = ['230', '365']
 
 
-output_dir  = 'Diffusion_Multishell_output'
-working_dir = 'Diffusion_Multishell_workingdir'
+output_dir  = 'Diffusion_Multishell_Kurtosis_output'
+working_dir = 'Diffusion_Multishell_Kurtosis_workingdir'
 
 Multishell_workflow = Workflow (name = 'Multishell_workflow')
 Multishell_workflow.base_dir = opj(experiment_dir, working_dir)
