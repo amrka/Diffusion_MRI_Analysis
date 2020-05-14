@@ -123,6 +123,7 @@ def Kurtosis(dwi, mask):
 		from dipy.core.gradients import gradient_table
 		from dipy.io import read_bvals_bvecs
 		from sklearn import preprocessing
+		import dipy.denoise.noise_estimate as ne   # determine the noise needed for RESTORE
 		import os
 
 
@@ -150,7 +151,9 @@ def Kurtosis(dwi, mask):
 			gtab = gradient_table(bval, bvec, big_delta=Delta, small_delta=delta, b0_threshold=0,atol=0.01)
 
 
-		dkimodel = dki.DiffusionKurtosisModel(gtab)
+		sigma = ne.estimate_sigma(data)
+	   # dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='WLS') the old way also the default
+		dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='RESTORE', sigma=sigma)
 
 		dkifit = dkimodel.fit(data, mask=mask)
 
