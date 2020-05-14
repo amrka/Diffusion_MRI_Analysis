@@ -28,7 +28,7 @@
 # Diffusion_20_AD  Diffusion_20_FA  Diffusion_20_MD  Diffusion_20_RD
 
 # Study_Based_Template/Kurtosis:
-# Kurtosis_AD  Kurtosis_AK  Kurtosis_AWF  Kurtosis_FA  Kurtosis_MD  Kurtosis_MK  Kurtosis_RD  Kurtosis_RK  Kurtosis_TORT
+# Kurtosis_AD  Kurtosis_AK  Kurtosis_AWF  Kurtosis_FA  Kurtosis_KA  Kurtosis_MD  Kurtosis_MK  Kurtosis_RD  Kurtosis_RK  Kurtosis_TORT
 
 # Study_Based_Template/NODDI:
 # NODDI_FICVF  NODDI_ODI
@@ -40,7 +40,7 @@
 # Diffusion_20_AD  Diffusion_20_FA  Diffusion_20_MD  Diffusion_20_RD
 
 # Waxholm_Template/Kurtosis:
-# Kurtosis_AD  Kurtosis_AK  Kurtosis_AWF  Kurtosis_FA  Kurtosis_MD  Kurtosis_MK  Kurtosis_RD  Kurtosis_RK  Kurtosis_TORT
+# Kurtosis_AD  Kurtosis_AK  Kurtosis_AWF  Kurtosis_FA  Kurtosis_KA  Kurtosis_MD  Kurtosis_MK  Kurtosis_RD  Kurtosis_RK  Kurtosis_TORT
 
 # Waxholm_Template/NODDI:
 # NODDI_FICVF  NODDI_ODI
@@ -75,6 +75,9 @@ for folder in _subject_id_*;do
 
 		imcp antsApplyRD_WAX/RD_{subject_id}  \
 		/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_RD/RD_${id}
+
+		imcp antsApplyKA_WAX/KA_{subject_id}  \
+		/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_KA/KA_${id}
 
 		imcp antsApplyAK_WAX/AK_{subject_id}  \
 		/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_AK/AK_${id}
@@ -127,6 +130,14 @@ python3 /home/amr/SCRIPTS/change_files_to_contain_gp_name.py \
 
 cd /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_RD
 fslmerge -t All_Kurtosis_RD_WAX *
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<
+
+python3 /home/amr/SCRIPTS/change_files_to_contain_gp_name.py \
+/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_KA  3 6
+
+cd /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_KA
+fslmerge -t All_Kurtosis_KA_WAX *
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<
 
@@ -244,6 +255,21 @@ tbss_skeleton -i mean_FA -p $skeleton_threshold mean_FA_skeleton_mask_dst \
 ${FSLDIR}/data/standard/LowerCingulum_1mm All_Kurtosis_FA_WAX All_RD_skeletonised -a All_Kurtosis_RD_WAX
 
 # # #--------------------------------------------------------------------------------------------------------------------------------------------
+# -> KA
+cd /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_KA
+skeleton_threshold=0.2;
+
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_FA/mean_FA_mask .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_FA/mean_FA .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_FA/mean_FA_skeleton_mask_dst .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_FA/All_Kurtosis_FA_WAX .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_FA/mean_FA_skeleton_mask .
+
+fslmaths All_Kurtosis_KA_WAX -mas mean_FA_mask All_Kurtosis_KA_WAX
+tbss_skeleton -i mean_FA -p $skeleton_threshold mean_FA_skeleton_mask_dst \
+${FSLDIR}/data/standard/LowerCingulum_1mm All_Kurtosis_FA_WAX All_KA_skeletonised -a All_Kurtosis_KA_WAX
+
+# # #--------------------------------------------------------------------------------------------------------------------------------------------
 # -> AK
 cd /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Waxholm_Template/Kurtosis/Kurtosis_AK
 skeleton_threshold=0.2;
@@ -344,6 +370,9 @@ for folder in _subject_id_*;do
 		imcp antsApplyRD_Study/RD_{subject_id}  \
 		/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_RD/RD_${id}
 
+		imcp antsApplyKA_Study/KA_{subject_id}  \
+		/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_KA/KA_${id}
+
 		imcp antsApplyAK_Study/AK_{subject_id}  \
 		/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_AK/AK_${id}
 
@@ -395,6 +424,15 @@ python3 /home/amr/SCRIPTS/change_files_to_contain_gp_name.py \
 
 cd /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_RD
 fslmerge -t All_Kurtosis_RD_Study *
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<
+
+python3 /home/amr/SCRIPTS/change_files_to_contain_gp_name.py \
+/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_KA  3 6
+
+cd /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_KA
+fslmerge -t All_Kurtosis_KA_Study *
+
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<
 
@@ -511,6 +549,20 @@ fslmaths All_Kurtosis_RD_Study -mas mean_FA_mask All_Kurtosis_RD_Study
 tbss_skeleton -i mean_FA -p $skeleton_threshold mean_FA_skeleton_mask_dst \
 ${FSLDIR}/data/standard/LowerCingulum_1mm All_Kurtosis_FA_Study All_RD_skeletonised -a All_Kurtosis_RD_Study
 
+# # #--------------------------------------------------------------------------------------------------------------------------------------------
+# -> KA
+cd /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_KA
+skeleton_threshold=0.2;
+
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_FA/mean_FA_mask .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_FA/mean_FA .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_FA/mean_FA_skeleton_mask_dst .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_FA/All_Kurtosis_FA_Study .
+imcp /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Study_Based_Template/Kurtosis/Kurtosis_FA/mean_FA_skeleton_mask .
+
+fslmaths All_Kurtosis_KA_Study -mas mean_FA_mask All_Kurtosis_KA_Study
+tbss_skeleton -i mean_FA -p $skeleton_threshold mean_FA_skeleton_mask_dst \
+${FSLDIR}/data/standard/LowerCingulum_1mm All_Kurtosis_FA_Study All_KA_skeletonised -a All_Kurtosis_KA_Study
 
 
 # # #--------------------------------------------------------------------------------------------------------------------------------------------
