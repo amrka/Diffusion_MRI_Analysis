@@ -35,7 +35,7 @@ subject_list = ['229', '230', '232', '233',
                 '362', '363', '364', '365',
                 '366']
 
-# subject_list = ['229', '230', '365', '274']
+# subject_list = ['264', '273']
 
 # subject_list = ['230', '365']
 
@@ -43,7 +43,7 @@ subject_list = ['229', '230', '232', '233',
 output_dir  = 'Diffusion_Multishell_Kurtosis_output'
 working_dir = 'Diffusion_Multishell_Kurtosis_workingdir'
 
-Multishell_workflow = Workflow (name = 'Multishell_workflow')
+Multishell_workflow = Workflow (name = 'Multishell_workflow_Kurtosis')
 Multishell_workflow.base_dir = opj(experiment_dir, working_dir)
 
 #-----------------------------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ def Kurtosis(dwi, mask):
 		from dipy.core.gradients import gradient_table
 		from dipy.io import read_bvals_bvecs
 		from sklearn import preprocessing
-        import dipy.denoise.noise_estimate as ne   # determine the noise needed for RESTORE
+		import dipy.denoise.noise_estimate as ne   # determine the noise needed for RESTORE
 		import os
 
 
@@ -164,12 +164,19 @@ def Kurtosis(dwi, mask):
 			bvec = preprocessing.normalize(bvec, norm ='l2')
 			gtab = gradient_table(bval, bvec, big_delta=Delta, small_delta=delta, b0_threshold=0,atol=0.01)
 
-		sigma = ne.estimate_sigma(data)
-	   # dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='WLS') the old way also the default
-        dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='RESTORE', sigma=sigma)
 
+        #without disable_background_masking, it does not work with some subjects
+		sigma = ne.estimate_sigma(data, disable_background_masking = True)
 
+       # dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='WLS') the old way also the default
+		dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='RESTORE', sigma=sigma)
+
+		#AWF and TORT from microstructure model
+		dki_micro_model = dki_micro.KurtosisMicrostructureModel(gtab, fit_method='RESTORE')
+
+        # fit the models
 		dkifit = dkimodel.fit(data, mask=mask)
+		dki_micro_fit = dki_micro_model.fit(data, mask=mask)
 
 		FA = dkifit.fa
 		MD = dkifit.md
@@ -180,6 +187,11 @@ def Kurtosis(dwi, mask):
 		MK = dkifit.mk(0, 3)
 		AK = dkifit.ak(0, 3)
 		RK = dkifit.rk(0, 3)
+
+		AWF = dki_micro_fit.awf                  #Axonal watrer Fraction
+		TORT = dki_micro_fit.tortuosity          #Tortouisty
+
+
 
 
 		save_nifti('DKI_FA.nii', FA, affine)
@@ -192,6 +204,10 @@ def Kurtosis(dwi, mask):
 		save_nifti('DKI_AK.nii', AK, affine)
 		save_nifti('DKI_RK.nii', RK, affine)
 
+		save_nifti('DKI_AWF.nii', AWF, affine)
+		save_nifti('DKI_TORT.nii', TORT, affine)
+
+
 		DKI_FA = os.path.abspath('DKI_FA.nii')
 		DKI_MD = os.path.abspath('DKI_MD.nii')
 		DKI_AD = os.path.abspath('DKI_AD.nii')
@@ -202,16 +218,6 @@ def Kurtosis(dwi, mask):
 		DKI_AK = os.path.abspath('DKI_AK.nii')
 		DKI_RK = os.path.abspath('DKI_RK.nii')
 
-		#AWF and TORT from microstructure model
-		dki_micro_model = dki_micro.KurtosisMicrostructureModel(gtab)
-
-		dki_micro_fit = dki_micro_model.fit(data, mask=mask)
-
-		AWF = dki_micro_fit.awf                  #Axonal watrer Fraction
-		TORT = dki_micro_fit.tortuosity          #Tortouisty
-
-		save_nifti('DKI_AWF.nii', AWF, affine)
-		save_nifti('DKI_TORT.nii', TORT, affine)
 
 		DKI_AWF = os.path.abspath('DKI_AWF.nii')
 		DKI_TORT = os.path.abspath('DKI_TORT.nii')
@@ -412,41 +418,41 @@ Multishell_workflow.connect ([
 
 #-----------------------------------------------------------------------------------------------
 
-      (Kurtosis, FA_to_WAX_Temp, [('DKI_FA','moving_image')]),
-
-      (Kurtosis, antsApplyMD_WAX, [('DKI_MD','input_image')]),
-      (FA_to_WAX_Temp, antsApplyMD_WAX, [('composite_transform','transforms')]),
-
-
-      (Kurtosis, antsApplyAD_WAX, [('DKI_AD','input_image')]),
-      (FA_to_WAX_Temp, antsApplyAD_WAX,[('composite_transform','transforms')]),
-
-
-      (Kurtosis, antsApplyRD_WAX, [('DKI_RD','input_image')]),
-      (FA_to_WAX_Temp, antsApplyRD_WAX,[('composite_transform','transforms')]),
-
-      (Kurtosis, antsApplyKA_WAX, [('DKI_KA','input_image')]),
-      (FA_to_WAX_Temp, antsApplyKA_WAX,[('composite_transform','transforms')]),
-
-
-      (Kurtosis, antsApplyAK_WAX, [('DKI_AK','input_image')]),
-      (FA_to_WAX_Temp, antsApplyAK_WAX,[('composite_transform','transforms')]),
-
-
-      (Kurtosis, antsApplyMK_WAX, [('DKI_MK','input_image')]),
-      (FA_to_WAX_Temp, antsApplyMK_WAX,[('composite_transform','transforms')]),
-
-      (Kurtosis, antsApplyRK_WAX, [('DKI_RK','input_image')]),
-      (FA_to_WAX_Temp, antsApplyRK_WAX,[('composite_transform','transforms')]),
-
-
-
-      (Kurtosis, antsApplyAWF_WAX, [('DKI_AWF','input_image')]),
-      (FA_to_WAX_Temp, antsApplyAWF_WAX,[('composite_transform','transforms')]),
-
-
-      (Kurtosis, antsApplyTORT_WAX, [('DKI_TORT','input_image')]),
-      (FA_to_WAX_Temp, antsApplyTORT_WAX,[('composite_transform','transforms')]),
+      # (Kurtosis, FA_to_WAX_Temp, [('DKI_FA','moving_image')]),
+      #
+      # (Kurtosis, antsApplyMD_WAX, [('DKI_MD','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyMD_WAX, [('composite_transform','transforms')]),
+      #
+      #
+      # (Kurtosis, antsApplyAD_WAX, [('DKI_AD','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyAD_WAX,[('composite_transform','transforms')]),
+      #
+      #
+      # (Kurtosis, antsApplyRD_WAX, [('DKI_RD','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyRD_WAX,[('composite_transform','transforms')]),
+      #
+      # (Kurtosis, antsApplyKA_WAX, [('DKI_KA','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyKA_WAX,[('composite_transform','transforms')]),
+      #
+      #
+      # (Kurtosis, antsApplyAK_WAX, [('DKI_AK','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyAK_WAX,[('composite_transform','transforms')]),
+      #
+      #
+      # (Kurtosis, antsApplyMK_WAX, [('DKI_MK','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyMK_WAX,[('composite_transform','transforms')]),
+      #
+      # (Kurtosis, antsApplyRK_WAX, [('DKI_RK','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyRK_WAX,[('composite_transform','transforms')]),
+      #
+      #
+      #
+      # (Kurtosis, antsApplyAWF_WAX, [('DKI_AWF','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyAWF_WAX,[('composite_transform','transforms')]),
+      #
+      #
+      # (Kurtosis, antsApplyTORT_WAX, [('DKI_TORT','input_image')]),
+      # (FA_to_WAX_Temp, antsApplyTORT_WAX,[('composite_transform','transforms')]),
 #-----------------------------------------------------------------------------------------------
       (Kurtosis, FA_to_Study_Temp, [('DKI_FA','moving_image')]),
 

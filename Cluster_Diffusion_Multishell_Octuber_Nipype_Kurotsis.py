@@ -151,11 +151,18 @@ def Kurtosis(dwi, mask):
 			gtab = gradient_table(bval, bvec, big_delta=Delta, small_delta=delta, b0_threshold=0,atol=0.01)
 
 
-		sigma = ne.estimate_sigma(data)
-	   # dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='WLS') the old way also the default
+        #without disable_background_masking, it does not work with some subjects
+		sigma = ne.estimate_sigma(data, disable_background_masking = True)
+
+       # dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='WLS') the old way also the default
 		dkimodel = dki.DiffusionKurtosisModel(gtab, fit_method='RESTORE', sigma=sigma)
 
+		#AWF and TORT from microstructure model
+		dki_micro_model = dki_micro.KurtosisMicrostructureModel(gtab, fit_method='RESTORE')
+
+        # fit the models
 		dkifit = dkimodel.fit(data, mask=mask)
+		dki_micro_fit = dki_micro_model.fit(data, mask=mask)
 
 		FA = dkifit.fa
 		MD = dkifit.md
@@ -167,6 +174,11 @@ def Kurtosis(dwi, mask):
 		AK = dkifit.ak(0, 3)
 		RK = dkifit.rk(0, 3)
 
+		AWF = dki_micro_fit.awf                  #Axonal watrer Fraction
+		TORT = dki_micro_fit.tortuosity          #Tortouisty
+
+
+
 
 		save_nifti('DKI_FA.nii', FA, affine)
 		save_nifti('DKI_MD.nii', MD, affine)
@@ -174,10 +186,13 @@ def Kurtosis(dwi, mask):
 		save_nifti('DKI_RD.nii', RD, affine)
 		save_nifti('DKI_KA.nii', KA, affine)
 
-
 		save_nifti('DKI_MK.nii', MK, affine)
 		save_nifti('DKI_AK.nii', AK, affine)
 		save_nifti('DKI_RK.nii', RK, affine)
+
+		save_nifti('DKI_AWF.nii', AWF, affine)
+		save_nifti('DKI_TORT.nii', TORT, affine)
+
 
 		DKI_FA = os.path.abspath('DKI_FA.nii')
 		DKI_MD = os.path.abspath('DKI_MD.nii')
@@ -189,22 +204,11 @@ def Kurtosis(dwi, mask):
 		DKI_AK = os.path.abspath('DKI_AK.nii')
 		DKI_RK = os.path.abspath('DKI_RK.nii')
 
-		#AWF and TORT from microstructure model
-		dki_micro_model = dki_micro.KurtosisMicrostructureModel(gtab)
-
-		dki_micro_fit = dki_micro_model.fit(data, mask=mask)
-
-		AWF = dki_micro_fit.awf                  #Axonal watrer Fraction
-		TORT = dki_micro_fit.tortuosity          #Tortouisty
-
-		save_nifti('DKI_AWF.nii', AWF, affine)
-		save_nifti('DKI_TORT.nii', TORT, affine)
 
 		DKI_AWF = os.path.abspath('DKI_AWF.nii')
 		DKI_TORT = os.path.abspath('DKI_TORT.nii')
 
 		return  DKI_FA, DKI_MD, DKI_AD, DKI_RD, DKI_KA, DKI_MK, DKI_AK, DKI_RK, DKI_AWF, DKI_TORT
-
 
 
 
