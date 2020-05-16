@@ -79,7 +79,8 @@ templates = {
              'skeleton_mask'            : 'Waxholm_Template/*/{map_id}/mean_FA_skeleton_mask.nii.gz',
 
              'all_image'                : 'Waxholm_Template/*/{map_id}/All_{map_id}_WAX.nii.gz',
-             'image_mask'               : 'Waxholm_Template/*/{map_id}/mean_FA_mask.nii.gz',
+            # 'image_mask'               : 'Waxholm_Template/*/{map_id}/mean_FA_mask.nii.gz',
+             'mean_FA'               : 'Waxholm_Template/*/{map_id}/mean_FA.nii.gz',
 
  }
 

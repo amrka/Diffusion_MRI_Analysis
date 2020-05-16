@@ -86,7 +86,10 @@ templates = {
              'skeleton_mask'            : 'Study_Based_Template/*/{map_id}/mean_FA_skeleton_mask.nii.gz',
 
              'all_image'                : 'Study_Based_Template/*/{map_id}/All_{map_id}_Study.nii.gz',
-             'image_mask'               : 'Study_Based_Template/*/{map_id}/mean_FA_mask.nii.gz',
+        #     'image_mask'               : 'Study_Based_Template/*/{map_id}/mean_FA_mask.nii.gz',
+     	     'mean_FA'               : 'Study_Based_Template/*/{map_id}/mean_FA.nii.gz',
+
+
 
  }
 
@@ -175,7 +178,7 @@ randomise_VBA.inputs.base_name = 'VBA_'
 
 
 #-----------------------------------------------------------------------------------------------------
-DTI_TBSS_Wax.connect ([
+DTI_TBSS_Study.connect ([
 
       (infosource, selectfiles,[('map_id','map_id')]),
 

@@ -82,7 +82,7 @@ templates = {
 
              'all_image'                : 'Study_Based_Template/*/{map_id}/All_{map_id}_Study.nii.gz',
 #             'image_mask'               : 'Study_Based_Template/*/{map_id}/mean_FA_mask.nii.gz',
-	     'mean_FA'               : 'Study_Based_Template/*/{map_id}/mean_FA.nii.gz',
+	         'mean_FA'               : 'Study_Based_Template/*/{map_id}/mean_FA.nii.gz',
 
  }
 
