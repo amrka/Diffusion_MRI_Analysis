@@ -33,22 +33,26 @@ MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
 # In[2]:
 
 experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat'
-map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
+# map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
+#
+#
+#                  'Diffusion_20_AD' , 'Diffusion_20_FA',  'Diffusion_20_MD' , 'Diffusion_20_RD',
+#
+#                  'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_KA',
+#                  'Kurtosis_AK' , 'Kurtosis_FA'  , 'Kurtosis_MK' , 'Kurtosis_RK' , 'Kurtosis_TORT',
+#
+#                  'Kurtosis_E_DTI_AD'  ,  'Kurtosis_E_DTI_FA' , 'Kurtosis_E_DTI_MK' , 'Kurtosis_E_DTI_TORT',
+#                  'Kurtosis_E_DTI_AK'  ,  'Kurtosis_E_DTI_KA' , 'Kurtosis_E_DTI_RD' ,
+#                  'Kurtosis_E_DTI_AWF' ,  'Kurtosis_E_DTI_MD' , 'Kurtosis_E_DTI_RK' ,
+#
+#
+#                  'NODDI_FICVF' , 'NODDI_ODI'
+#  ]
 
-
-                 'Diffusion_20_AD' , 'Diffusion_20_FA',  'Diffusion_20_MD' , 'Diffusion_20_RD',
-
+map_list=  [
                  'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_KA',
                  'Kurtosis_AK' , 'Kurtosis_FA'  , 'Kurtosis_MK' , 'Kurtosis_RK' , 'Kurtosis_TORT',
-
-                 'Kurtosis_E_DTI_AD'  ,  'Kurtosis_E_DTI_FA' , 'Kurtosis_E_DTI_MK' , 'Kurtosis_E_DTI_TORT',
-                 'Kurtosis_E_DTI_AK'  ,  'Kurtosis_E_DTI_KA' , 'Kurtosis_E_DTI_RD' ,
-                 'Kurtosis_E_DTI_AWF' ,  'Kurtosis_E_DTI_MD' , 'Kurtosis_E_DTI_RK' ,
-
-
-                 'NODDI_FICVF' , 'NODDI_ODI'
  ]
-
 
 # map_list = ['229', '230', '365', '274']
 
@@ -146,6 +150,18 @@ nilearn_smoothing = Node(name = 'nilearn_smoothing',
                   function = nilearn_smoothing))
 
 
+#-----------------------------------------------------------------------------------------------------
+#mask only FA values > 0.2 to gurantee it is WM
+thresh_FA = Node(fsl.Threshold(), name = 'thresh_FA')
+thresh_FA.inputs.thresh = 0.2
+
+
+#-----------------------------------------------------------------------------------------------------
+#binarize this mask
+binarize_FA = Node(fsl.UnaryMaths(), name = 'binarize_FA')
+binarize_FA.inputs.operation = 'bin'
+binarize_FA.inputs.output_datatype = 'char'
+
 
 #-----------------------------------------------------------------------------------------------------
 #randomise on the smoothed all images
@@ -159,7 +175,7 @@ randomise_VBA.inputs.base_name = 'VBA_'
 
 
 #-----------------------------------------------------------------------------------------------------
-DTI_TBSS_Study.connect ([
+DTI_TBSS_Wax.connect ([
 
       (infosource, selectfiles,[('map_id','map_id')]),
 
@@ -169,7 +185,10 @@ DTI_TBSS_Study.connect ([
       (selectfiles, nilearn_smoothing, [('all_image','image')]),
 
       (nilearn_smoothing, randomise_VBA, [('smoothed_output','in_file')]),
-      (selectfiles, randomise_VBA, [('image_mask','mask')])
+
+     (selectfiles, thresh_FA, [('mean_FA','in_file')]),
+     (thresh_FA, binarize_FA, [('out_file','in_file')]),
+     (binarize_FA, randomise_VBA, [('out_file','mask')])
 
 
 
