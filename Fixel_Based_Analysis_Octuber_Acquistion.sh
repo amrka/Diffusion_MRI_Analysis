@@ -32,7 +32,7 @@ scheme='/media/amr/HDD/Work/October_Acquistion/FBA_Multishell_Scheme.txt'
 mkdir /media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir
 
 #------------------------------
-#1 -> concatenate 
+#1 -> concatenate
 #make a seperate folder fro each sub and for each step to mimic nipype sweet style
 #Do not need it already done (the concatenation not the folder thing)
 # for folder in *;do
@@ -48,7 +48,7 @@ mkdir /media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir
 # 	cd ..
 # done
 # echo '-----------------------------------------------------------------------------------------------------'
- 
+
 #---------------------------
 #2 -> denoise
 
@@ -57,13 +57,13 @@ mkdir /media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir
 for folder in *;do
 	cd $folder
 	echo $folder
-	
+
 	mkdir /media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/denoise
 
 	dwidenoise \
 	Diff_Multishell_${folder}.nii \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/denoise/Diff_Multishell_${folder}_denoised.nii \
-	-nthreads  100  
+	-nthreads  100
 
 	cd ..
 done
@@ -208,7 +208,7 @@ for folder in *;do
 	-mask /media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/upsampling/Diff_Multishell_${folder}_denoised_eddy_upsampled_mask.nii \
 	-fslgrad $bvec $bval \
 	-nthreads 100 \
-	 
+
 
 	mrconvert \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/fODF/wm_fod_${folder}.nii \
@@ -267,7 +267,7 @@ for folder in *;do
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/fODF/csf_fod_${folder}.nii \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/mtnormalize/csf_fod_${folder}_norm.nii \
 	-mask /media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/upsampling/Diff_Multishell_${folder}_denoised_eddy_upsampled_mask.nii \
-	-nthreads 100 
+	-nthreads 100
 
 	cd ..
 
@@ -275,7 +275,7 @@ done
 echo '-----------------------------------------------------------------------------------------------------'
 
 #--------------------
-#10 -> Create a study-based FOD template 
+#10 -> Create a study-based FOD template
 
 mkdir -p /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fod_input
 mkdir    /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/mask_input
@@ -294,7 +294,7 @@ for folder in *;do
 
 	cd ..
 
-done	
+done
 echo '-----------------------------------------------------------------------------------------------------'
 
 #-----------------
@@ -332,7 +332,7 @@ done
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
-#14 -> Compute template mask, transfrom subjects masks to template space 
+#14 -> Compute template mask, transfrom subjects masks to template space
 #we put these masks in the same directory with the subjects' warps
 
 for folder in *;do
@@ -357,17 +357,17 @@ mrmath \
 /media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/*/subs2template/sub_*_2_template_mask.nii \
 min \
 /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/wmfod_template_mask.nii \
--datatype bit 
+-datatype bit
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
 #16 -> Compute a white matter template analysis fixel mask
-
+#0.06 is deiberate, I tried with other values: 0.03, 0.1, 0.2, 0.25, 0.3 -> they remove parts of the crossing fibers in teh white matters
 fod2fixel \
 -mask /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/wmfod_template_mask.nii \
 -fmls_peak_value 0.06 \
 /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/wmfod_template.nii \
-/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fixel_mask 
+/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fixel_mask
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
@@ -402,7 +402,7 @@ for folder in *;do
 	-mask /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/wmfod_template_mask.nii \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/subs2template/sub_${folder}_2_template_fod_NOT_REORIENTED.nii \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/fixel_in_template_NOT_REORIENTED \
-	-afd fd.mif 
+	-afd fd.mif
 
 	cd ..
 
@@ -421,7 +421,7 @@ for folder in *;do
 	fixelreorient \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/fixel_in_template_NOT_REORIENTED \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/subs2template/sub_${folder}_2_template_warp.nii \
-	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/fixel_in_template_REORIENTED 
+	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/fixel_in_template_REORIENTED
 
 	cd ..
 
@@ -438,7 +438,7 @@ for folder in *;do
 	fixelcorrespondence  \
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/fixel_in_template_REORIENTED/fd.mif \
 	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fixel_mask \
-	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fd PRE_${folder}.mif 
+	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fd PRE_${folder}.mif
 
 	cd ..
 
@@ -457,7 +457,7 @@ for folder in *;do
 	/media/amr/Amr_4TB/Work/October_Acquistion/FBA_Workingdir/${folder}/subs2template/sub_${folder}_2_template_warp.nii \
 	-fc \
 	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fixel_mask \
-	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc IN_${folder}.mif 
+	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc IN_${folder}.mif
 
 	cd ..
 
@@ -471,7 +471,7 @@ mkdir /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/log_fc
 
 cp /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc/index.mif \
 /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc/directions.mif \
-/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/log_fc 
+/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/log_fc
 
 cd /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc/
 
@@ -479,9 +479,9 @@ for IN in IN_*;do
 	echo $IN
 	IN=`echo ${IN} | sed s/'.mif'/''/`
 	echo $IN
-	mrcalc ${IN}.mif -log  /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/log_fc/${IN}_log.mif 
+	mrcalc ${IN}.mif -log  /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/log_fc/${IN}_log.mif
 
-done 
+done
 
 cd /media/amr/Amr_4TB/Work/October_Acquistion/Data
 pwd
@@ -495,17 +495,17 @@ mkdir /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fdc
 
 cp /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc/index.mif \
 /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc/directions.mif \
-/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fdc 
+/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fdc
 
 
 for folder in *;do
-	cd $folder 
+	cd $folder
 	echo $folder
 
 	mrcalc \
 	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fd/PRE_${folder}.mif \
 	/media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fc/IN_${folder}.mif \
-	-mult /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fdc/IN_${folder}.mif 
+	-mult /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA/fdc/IN_${folder}.mif
 
 	cd ..
 
@@ -520,8 +520,8 @@ cd /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA
 tckgen -angle 22.5 -maxlen 250 -minlen 10 -power 1.0 wmfod_template.nii \
 -seed_image wmfod_template_mask.nii \
 -mask wmfod_template_mask.nii \
--select 2000000 -cutoff 0.06 tracks_2_million.tck 
- 
+-select 2000000 -cutoff 0.06 tracks_2_million.tck
+
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
@@ -533,7 +533,7 @@ tcksift \
 tracks_2_million.tck \
 wmfod_template.nii \
 tracks_200_thousand_sift.tck \
--term_number 200000 
+-term_number 200000
 
 echo '-----------------------------------------------------------------------------------------------------'
 
@@ -637,8 +637,8 @@ cd /media/amr/Amr_4TB/Work/October_Acquistion/template_FBA
 tckgen -angle 22.5 -maxlen 250 -minlen 10 -power 1.0 wmfod_template.nii \
 -seed_image wmfod_template_mask.nii \
 -mask wmfod_template_mask.nii \
--select 20000000 -cutoff 0.06 tracks_20_million.tck 
- 
+-select 20000000 -cutoff 0.06 tracks_20_million.tck
+
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
@@ -650,7 +650,7 @@ tcksift \
 tracks_20_million.tck \
 wmfod_template.nii \
 tracks_2_million_sift.tck \
--term_number 2000000 
+-term_number 2000000
 
 echo '-----------------------------------------------------------------------------------------------------'
 
@@ -775,12 +775,3 @@ fdc_fwe_pvalue.tsf
 
 
 #Do not forget tractography
-
-
-
-
-
-
-
-
-

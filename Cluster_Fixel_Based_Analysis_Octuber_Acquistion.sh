@@ -32,7 +32,7 @@ scheme='/home/in/aeed/Work/October_Acquistion/FBA_Multishell_Scheme.txt'
 mkdir /home/in/aeed/Work/October_Acquistion/FBA_Workingdir
 
 #------------------------------
-#1 -> concatenate 
+#1 -> concatenate
 #make a seperate folder fro each sub and for each step to mimic nipype sweet style
 #Do not need it already done (the concatenation not the folder thing)
 for folder in *;do
@@ -57,7 +57,7 @@ echo '--------------------------------------------------------------------------
 # for folder in *;do
 # 	cd $folder
 # 	echo $folder
-	
+
 # 	mkdir /home/in/aeed/Work/October_Acquistion/FBA_Workingdir/${folder}/denoise
 
 # 	dwidenoise \
@@ -208,7 +208,7 @@ for folder in *;do
 	# -mask /home/in/aeed/Work/October_Acquistion/FBA_Workingdir/${folder}/upsampling/Diff_Multishell_${folder}_denoised_eddy_upsampled_mask.nii \
 	# -fslgrad $bvec $bval \
 	# -nthreads 100 \
-	# -force 
+	# -force
 
 #Create the 3-tissue segmentation image
 	mrconvert \
@@ -277,7 +277,7 @@ done
 echo '---------------------------------------------mtnormalize--------------------------------------------------------'
 
 #--------------------
-#10 -> Create a study-based FOD template 
+#10 -> Create a study-based FOD template
 
 mkdir -p /home/in/aeed/Work/October_Acquistion/template_FBA/fod_input
 mkdir    /home/in/aeed/Work/October_Acquistion/template_FBA/mask_input
@@ -296,7 +296,7 @@ for folder in *;do
 
 	cd ..
 
-done	
+done
 echo '-----------------------------------------------------------------------------------------------------'
 
 #-----------------
@@ -333,7 +333,7 @@ done
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
-#14 -> Compute template mask, transfrom subjects masks to template space 
+#14 -> Compute template mask, transfrom subjects masks to template space
 #we put these masks in the same directory with the subjects' warps
 
 for folder in *;do
@@ -363,7 +363,7 @@ echo '--------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------
 #16 -> Compute a white matter template analysis fixel mask
-
+#0.06 is deiberate, I tried with other values: 0.03, 0.1, 0.2, 0.25, 0.3 -> they remove parts of the crossing fibers in teh white matters
 fod2fixel \
 -mask /home/in/aeed/Work/October_Acquistion/template_FBA/wmfod_template_mask.nii \
 -fmls_peak_value 0.06 \
@@ -472,7 +472,7 @@ mkdir /home/in/aeed/Work/October_Acquistion/template_FBA/log_fc
 
 cp /home/in/aeed/Work/October_Acquistion/template_FBA/fc/index.mif \
 /home/in/aeed/Work/October_Acquistion/template_FBA/fc/directions.mif \
-/home/in/aeed/Work/October_Acquistion/template_FBA/log_fc 
+/home/in/aeed/Work/October_Acquistion/template_FBA/log_fc
 
 cd /home/in/aeed/Work/October_Acquistion/template_FBA/fc/
 
@@ -482,7 +482,7 @@ for IN in IN_*;do
 	echo $IN
 	mrcalc ${IN}.mif -log  /home/in/aeed/Work/October_Acquistion/template_FBA/log_fc/${IN}_log.mif -force
 
-done 
+done
 
 cd /home/in/aeed/Work/October_Acquistion/Data
 pwd
@@ -496,11 +496,11 @@ mkdir /home/in/aeed/Work/October_Acquistion/template_FBA/fdc
 
 cp /home/in/aeed/Work/October_Acquistion/template_FBA/fc/index.mif \
 /home/in/aeed/Work/October_Acquistion/template_FBA/fc/directions.mif \
-/home/in/aeed/Work/October_Acquistion/template_FBA/fdc 
+/home/in/aeed/Work/October_Acquistion/template_FBA/fdc
 
 
 for folder in *;do
-	cd $folder 
+	cd $folder
 	echo $folder
 
 	mrcalc \
@@ -522,7 +522,7 @@ tckgen -angle 22.5 -maxlen 250 -minlen 10 -power 1.0 wmfod_template.nii \
 -seed_image wmfod_template_mask.nii \
 -mask wmfod_template_mask.nii \
 -select 2000000 -cutoff 0.06 tracks_2_million.tck -force
- 
+
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
@@ -641,7 +641,7 @@ tckgen -angle 22.5 -maxlen 250 -minlen 10 -power 1.0 wmfod_template.nii \
 -seed_image wmfod_template_mask.nii \
 -mask wmfod_template_mask.nii \
 -select 20000000 -cutoff 0.06 tracks_20_million.tck -force
- 
+
 echo '-----------------------------------------------------------------------------------------------------'
 
 #----------------------------------------------------------------------------------------------
@@ -777,12 +777,3 @@ fdc_fwe_pvalue.tsf
 
 
 #Do not forget tractography
-
-
-
-
-
-
-
-
-
