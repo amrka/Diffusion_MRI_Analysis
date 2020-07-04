@@ -128,7 +128,7 @@ randomise_tbss.inputs.base_name = 'TBSS_'
 
 
 #=====================================================================================================
-# palm
+# palm tbss
 
 
 def palm_tbss(in_file, mask_file):
@@ -203,6 +203,31 @@ randomise_VBA.inputs.tfce = True
 randomise_VBA.inputs.vox_p_values = True
 randomise_VBA.inputs.base_name = 'VBA_'
 
+#=====================================================================================================
+# palm VBA
+
+
+def palm_vba(in_file, mask_file):
+    import os
+    from glob import glob
+    from nipype.interfaces.base import CommandLine
+
+    design = '/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.mat'
+    contrast = '/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.con'
+
+
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10000 -corrcon -o palm_vba")
+
+
+    cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
+    results = cl.run()
+    # return [os.path.join(os.getcwd(), val) for val in sorted(glob('palm*'))]
+
+palm_vba = Node(name = 'palm_vba',
+                 interface = Function(input_names = ['in_file', 'mask_file'],
+                                      function = palm_vba))
+
+
 
 #-----------------------------------------------------------------------------------------------------
 DTI_TBSS_Study.connect ([
@@ -216,7 +241,7 @@ DTI_TBSS_Study.connect ([
       (selectfiles, palm_tbss, [('skeleton_mask','mask_file')]),
 
      #
-     #  (selectfiles, nilearn_smoothing, [('all_image','image')]),
+      (selectfiles, nilearn_smoothing, [('all_image','image')]),
      #
      #  (nilearn_smoothing, randomise_VBA, [('smoothed_output','in_file')]),
      #
@@ -224,6 +249,10 @@ DTI_TBSS_Study.connect ([
      # (thresh_FA, binarize_FA, [('out_file','in_file')]),
      # (binarize_FA, randomise_VBA, [('out_file','mask')])
 
+     (nilearn_smoothing, palm_vba, [('smoothed_output','in_file')]),
+     (selectfiles, thresh_FA, [('mean_FA','in_file')]),
+     (thresh_FA, binarize_FA, [('out_file','in_file')]),
+     (binarize_FA, palm_vba, [('out_file','mask_file')])
 
 
 
