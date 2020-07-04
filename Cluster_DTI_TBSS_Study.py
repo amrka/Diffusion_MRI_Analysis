@@ -32,20 +32,21 @@ import matplotlib.pyplot as plt
 experiment_dir = '/home/in/aeed/TBSS'
 
 
-map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
-
-
-                 'Diffusion_20_AD' , 'Diffusion_20_FA',  'Diffusion_20_MD' , 'Diffusion_20_RD',
-
-                 'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_KA',
-                 'Kurtosis_AK' , 'Kurtosis_FA'  , 'Kurtosis_MK' , 'Kurtosis_RK' , 'Kurtosis_TORT',
-
-                 'Kurtosis_E_DTI_AD'  ,  'Kurtosis_E_DTI_FA' , 'Kurtosis_E_DTI_MK' , 'Kurtosis_E_DTI_TORT',
-                 'Kurtosis_E_DTI_AK'  ,  'Kurtosis_E_DTI_KA' , 'Kurtosis_E_DTI_RD' ,
-                 'Kurtosis_E_DTI_AWF' ,  'Kurtosis_E_DTI_MD' , 'Kurtosis_E_DTI_RK' ,
-
-
-                 'NODDI_FICVF' , 'NODDI_ODI'
+map_list=  [    'CHARMED_AD' ,
+# 'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
+#
+#
+#                  'Diffusion_20_AD' , 'Diffusion_20_FA',  'Diffusion_20_MD' , 'Diffusion_20_RD',
+#
+#                  'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_KA',
+#                  'Kurtosis_AK' , 'Kurtosis_FA'  , 'Kurtosis_MK' , 'Kurtosis_RK' , 'Kurtosis_TORT',
+#
+#                  'Kurtosis_E_DTI_AD'  ,  'Kurtosis_E_DTI_FA' , 'Kurtosis_E_DTI_MK' , 'Kurtosis_E_DTI_TORT',
+#                  'Kurtosis_E_DTI_AK'  ,  'Kurtosis_E_DTI_KA' , 'Kurtosis_E_DTI_RD' ,
+#                  'Kurtosis_E_DTI_AWF' ,  'Kurtosis_E_DTI_MD' , 'Kurtosis_E_DTI_RK' ,
+#
+#
+#                  'NODDI_FICVF' , 'NODDI_ODI'
  ]
 
 
@@ -117,6 +118,31 @@ randomise_tbss.inputs.tfce2D = True
 randomise_tbss.inputs.vox_p_values = True
 randomise_tbss.inputs.base_name = 'TBSS_'
 
+#=====================================================================================================
+# palm
+
+
+def palm_tbss(in_file, mask_file):
+    import os
+    from glob import glob
+    from nipype.interfaces.base import CommandLine
+
+    design = '/home/in/aeed/TBSS/Design_TBSS.mat'
+    contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
+
+
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -tfce2D -noniiclass -n 10000 -corrcon -o palm_tbss")
+
+
+    cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
+    results = cl.run()
+    # return [os.path.join(os.getcwd(), val) for val in sorted(glob('palm*'))]
+
+palm_tbss = Node(name = 'palm_tbss',
+                 interface = Function(input_names = ['in_file', 'mask_file'],
+                                      function = palm_tbss))
+
+
 
 #-----------------------------------------------------------------------------------------------------
 #smoothing the images
@@ -176,16 +202,22 @@ DTI_TBSS_Study.connect ([
 
       (infosource, selectfiles,[('map_id','map_id')]),
 
-      (selectfiles, randomise_tbss, [('all_skeleton','in_file')]),
-      (selectfiles, randomise_tbss, [('skeleton_mask','mask')]),
+      # (selectfiles, randomise_tbss, [('all_skeleton','in_file')]),
+      # (selectfiles, randomise_tbss, [('skeleton_mask','mask')]),
+      #
 
-      (selectfiles, nilearn_smoothing, [('all_image','image')]),
 
-      (nilearn_smoothing, randomise_VBA, [('smoothed_output','in_file')]),
+     (selectfiles, palm_tbss, [('all_skeleton','in_file')]),
+     (selectfiles, palm_tbss, [('skeleton_mask','mask_file')]),
 
-     (selectfiles, thresh_FA, [('mean_FA','in_file')]),
-     (thresh_FA, binarize_FA, [('out_file','in_file')]),
-     (binarize_FA, randomise_VBA, [('out_file','mask')])
+
+     #  (selectfiles, nilearn_smoothing, [('all_image','image')]),
+     #
+     #  (nilearn_smoothing, randomise_VBA, [('smoothed_output','in_file')]),
+     #
+     # (selectfiles, thresh_FA, [('mean_FA','in_file')]),
+     # (thresh_FA, binarize_FA, [('out_file','in_file')]),
+     # (binarize_FA, randomise_VBA, [('out_file','mask')])
 
 
 
