@@ -250,5 +250,5 @@ DTI_TBSS_Study.connect ([
 
 
 DTI_TBSS_Study.write_graph(graph2use='flat')
-DTI_TBSS_Study.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50})
+DTI_TBSS_Study.run(plugin='SLURMGraph', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50})
 # DTI_workflow.run(plugin='SLURM')
