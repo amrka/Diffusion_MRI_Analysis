@@ -111,7 +111,7 @@ contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
 randomise_tbss = Node(fsl.Randomise(), name = 'randomise_tbss')
 randomise_tbss.inputs.design_mat = design
 randomise_tbss.inputs.tcon = contrast
-randomise_tbss.inputs.num_perm = 10
+randomise_tbss.inputs.num_perm = 10000
 randomise_tbss.inputs.tfce2D = True
 randomise_tbss.inputs.vox_p_values = True
 randomise_tbss.inputs.base_name = 'TBSS_'
@@ -129,7 +129,7 @@ def palm_tbss(in_file, mask_file):
     contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
 
 
-    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -tfce2D -noniiclass -n 10 -corrcon -save1-p -o palm_tbss")
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -tfce2D -noniiclass -n 10000 -corrcon -save1-p -o palm_tbss")
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
@@ -188,7 +188,7 @@ binarize_FA.inputs.output_datatype = 'char'
 randomise_VBA = Node(fsl.Randomise(), name = 'randomise_vba')
 randomise_VBA.inputs.design_mat = design
 randomise_VBA.inputs.tcon = contrast
-randomise_VBA.inputs.num_perm = 10
+randomise_VBA.inputs.num_perm = 10000
 randomise_VBA.inputs.tfce = True
 randomise_VBA.inputs.vox_p_values = True
 randomise_VBA.inputs.base_name = 'VBA_'
@@ -205,7 +205,7 @@ def palm_vba(in_file, mask_file):
     design = '/home/in/aeed/TBSS/Design_TBSS.mat'
     contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
 
-    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10 -corrcon -save1-p -o palm_vba")
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10000 -corrcon -save1-p -o palm_vba")
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
@@ -250,5 +250,5 @@ DTI_TBSS_Study.connect ([
 
 
 DTI_TBSS_Study.write_graph(graph2use='flat')
-DTI_TBSS_Study.run(plugin='SLURMGraph', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50})
+DTI_TBSS_Study.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50})
 # DTI_workflow.run(plugin='SLURM')
