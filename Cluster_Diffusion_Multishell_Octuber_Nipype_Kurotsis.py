@@ -470,4 +470,4 @@ Multishell_workflow.connect ([
 
 
 Multishell_workflow.write_graph(graph2use='flat')
-Multishell_workflow.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50)
+Multishell_workflow.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
