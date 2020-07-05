@@ -140,7 +140,7 @@ def palm_tbss(in_file, mask_file):
     contrast = '/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.con'
 
 
-    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -tfce2D -noniiclass -n 10000 -corrcon -o palm_tbss")
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -tfce2D -noniiclass -n 10000 -corrcon -save1-p -o palm_tbss")
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
@@ -216,7 +216,7 @@ def palm_vba(in_file, mask_file):
     contrast = '/media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.con'
 
 
-    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10000 -corrcon -o palm_vba")
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10000 -corrcon -save1-p -o palm_vba")
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))

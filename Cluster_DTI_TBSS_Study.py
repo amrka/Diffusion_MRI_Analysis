@@ -131,7 +131,7 @@ def palm_tbss(in_file, mask_file):
     contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
 
 
-    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -tfce2D -noniiclass -n 10000 -corrcon -o palm_tbss")
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -tfce2D -noniiclass -n 10000 -corrcon -save1-p -o palm_tbss")
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
@@ -152,10 +152,9 @@ def nilearn_smoothing(image):
 
     import numpy as np
     import os
+
+    # kernel = [4.3,4.3,16]
     kernel = [3,3,0]
-
-    #kernel = [4.3,4.3,16]
-
 
 
 
@@ -208,7 +207,7 @@ def palm_vba(in_file, mask_file):
     design = '/home/in/aeed/TBSS/Design_TBSS.mat'
     contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
 
-    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10000 -corrcon -o palm_vba")
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10000 -corrcon -save1-p -o palm_vba")
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
