@@ -48,7 +48,6 @@ map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHAR
                  'NODDI_FICVF' , 'NODDI_ODI'
  ]
 
-
 # map_list = ['229', '230', '365', '274']
 
 output_dir  = 'DTI_TBSS_Study'
@@ -117,6 +116,31 @@ randomise_tbss.inputs.tfce2D = True
 randomise_tbss.inputs.vox_p_values = True
 randomise_tbss.inputs.base_name = 'TBSS_'
 
+#=====================================================================================================
+# palm
+
+
+def palm_tbss(in_file, mask_file):
+    import os
+    from glob import glob
+    from nipype.interfaces.base import CommandLine
+
+    design = '/home/in/aeed/TBSS/Design_TBSS.mat'
+    contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
+
+
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -tfce2D -noniiclass -n 10000 -corrcon -save1-p -o palm_tbss")
+
+
+    cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
+    results = cl.run()
+    # return [os.path.join(os.getcwd(), val) for val in sorted(glob('palm*'))]
+
+palm_tbss = Node(name = 'palm_tbss',
+                 interface = Function(input_names = ['in_file', 'mask_file'],
+                                      function = palm_tbss))
+
+
 
 #-----------------------------------------------------------------------------------------------------
 #smoothing the images
@@ -126,10 +150,9 @@ def nilearn_smoothing(image):
 
     import numpy as np
     import os
+
+    # kernel = [4.3,4.3,16]
     kernel = [3,3,0]
-
-    #kernel = [4.3,4.3,16]
-
 
 
 
@@ -170,6 +193,30 @@ randomise_VBA.inputs.tfce = True
 randomise_VBA.inputs.vox_p_values = True
 randomise_VBA.inputs.base_name = 'VBA_'
 
+#=====================================================================================================
+# palm VBA
+
+
+def palm_vba(in_file, mask_file):
+    import os
+    from glob import glob
+    from nipype.interfaces.base import CommandLine
+
+    design = '/home/in/aeed/TBSS/Design_TBSS.mat'
+    contrast = '/home/in/aeed/TBSS/Design_TBSS.con'
+
+    cmd = ("palm -i {in_file} -m {mask_file} -d {design} -t {contrast} -T -noniiclass -n 10000 -corrcon -save1-p -o palm_vba")
+
+
+    cl = CommandLine(cmd.format(in_file=in_file, mask_file=mask_file, design=design, contrast=contrast ))
+    results = cl.run()
+    # return [os.path.join(os.getcwd(), val) for val in sorted(glob('palm*'))]
+
+palm_vba = Node(name = 'palm_vba',
+                 interface = Function(input_names = ['in_file', 'mask_file'],
+                                      function = palm_vba))
+
+
 
 #-----------------------------------------------------------------------------------------------------
 DTI_TBSS_Study.connect ([
@@ -179,13 +226,22 @@ DTI_TBSS_Study.connect ([
       (selectfiles, randomise_tbss, [('all_skeleton','in_file')]),
       (selectfiles, randomise_tbss, [('skeleton_mask','mask')]),
 
-      (selectfiles, nilearn_smoothing, [('all_image','image')]),
+      (selectfiles, palm_tbss, [('all_skeleton','in_file')]),
+      (selectfiles, palm_tbss, [('skeleton_mask','mask_file')]),
 
-      (nilearn_smoothing, randomise_VBA, [('smoothed_output','in_file')]),
-
+     #
+     (selectfiles, nilearn_smoothing, [('all_image','image')]),
      (selectfiles, thresh_FA, [('mean_FA','in_file')]),
      (thresh_FA, binarize_FA, [('out_file','in_file')]),
-     (binarize_FA, randomise_VBA, [('out_file','mask')])
+
+
+     (nilearn_smoothing, randomise_VBA, [('smoothed_output','in_file')]),
+     (binarize_FA, randomise_VBA, [('out_file','mask')]),
+
+
+     (nilearn_smoothing, palm_vba, [('smoothed_output','in_file')]),
+     (binarize_FA, palm_vba, [('out_file','mask_file')])
+
 
 
 
@@ -194,5 +250,5 @@ DTI_TBSS_Study.connect ([
 
 
 DTI_TBSS_Study.write_graph(graph2use='flat')
-DTI_TBSS_Study.run(plugin='SLURM')
+DTI_TBSS_Study.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50})
 # DTI_workflow.run(plugin='SLURM')
