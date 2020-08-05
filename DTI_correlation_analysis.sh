@@ -24,5 +24,5 @@ cp \
 /media/amr/Amr_4TB/Work/October_Acquistion/VBM/VBM_corr_designs/plus_maze_gp_names.csv \
 /media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs
 
-
+# I edited the CSV files manually to remove the extra subjects
 # I did the designs manually, by calling Glm and fill in the data from the CSV files
