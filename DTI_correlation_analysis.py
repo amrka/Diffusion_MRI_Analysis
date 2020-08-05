@@ -20,24 +20,24 @@ import matplotlib.pyplot as plt
 #-------------------------------------------------------------------------------------
 experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
 
-# map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
-#
-#
-#                  'Diffusion_20_AD' , 'Diffusion_20_FA',  'Diffusion_20_MD' , 'Diffusion_20_RD',
-#
-#                  'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_KA',
-#                  'Kurtosis_AK' , 'Kurtosis_FA'  , 'Kurtosis_MK' , 'Kurtosis_RK' , 'Kurtosis_TORT',
-#
-#                  'Kurtosis_E_DTI_AD'  ,  'Kurtosis_E_DTI_FA' , 'Kurtosis_E_DTI_MK' , 'Kurtosis_E_DTI_TORT',
-#                  'Kurtosis_E_DTI_AK'  ,  'Kurtosis_E_DTI_KA' , 'Kurtosis_E_DTI_RD' ,
-#                  'Kurtosis_E_DTI_AWF' ,  'Kurtosis_E_DTI_MD' , 'Kurtosis_E_DTI_RK' ,
-#
-#
-#                  'NODDI_FICVF' , 'NODDI_ODI'
-#  ]
+map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
 
 
-map_list = ['Diffusion_20_FA']
+                 'Diffusion_20_AD' , 'Diffusion_20_FA',  'Diffusion_20_MD' , 'Diffusion_20_RD',
+
+                 'Kurtosis_AD' , 'Kurtosis_AWF' , 'Kurtosis_MD' , 'Kurtosis_RD' , 'Kurtosis_KA',
+                 'Kurtosis_AK' , 'Kurtosis_FA'  , 'Kurtosis_MK' , 'Kurtosis_RK' , 'Kurtosis_TORT',
+
+                 'Kurtosis_E_DTI_AD'  ,  'Kurtosis_E_DTI_FA' , 'Kurtosis_E_DTI_MK' , 'Kurtosis_E_DTI_TORT',
+                 'Kurtosis_E_DTI_AK'  ,  'Kurtosis_E_DTI_KA' , 'Kurtosis_E_DTI_RD' ,
+                 'Kurtosis_E_DTI_AWF' ,  'Kurtosis_E_DTI_MD' , 'Kurtosis_E_DTI_RK' ,
+
+
+                 'NODDI_FICVF' , 'NODDI_ODI'
+ ]
+
+
+# map_list = ['Diffusion_20_FA']
 
 output_dir  = 'DTI_corr/DTI_correlation_analysis_outputdir'
 working_dir = 'DTI_corr/DTI_correlation_analysis_workingdir'
@@ -69,8 +69,8 @@ datasink.inputs.container = output_dir
 datasink.inputs.base_directory = experiment_dir
 
 substitutions = [('_map_id_', ''),
-('_contrast_..media..amr..Amr_4TB..Work..October_Acquistion..DTI..DTI_corr_designs..', ''),
-('design_..media..amr..Amr_4TB..Work..October_Acquistion..DTI..DTI_corr_designs..', ''),
+('_contrast_..media..amr..Amr_4TB..Work..October_Acquistion..DTI_corr..DTI_corr_designs..', ''),
+('design_..media..amr..Amr_4TB..Work..October_Acquistion..DTI_corr..DTI_corr_designs..', ''),
 ]
 
 datasink.inputs.substitutions = substitutions
@@ -82,39 +82,39 @@ datasink.inputs.substitutions = substitutions
 designs = [
 '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.mat',
 '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center_percent.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms_percent.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms_percent.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_total_distance.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_velocity.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_center_corners_ratio.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_center.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_corners.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_sec_in_center.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_distance.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_time_in_corners.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_velocity.mat'
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center_percent.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms_percent.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms_percent.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_total_distance.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_velocity.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_center_corners_ratio.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_center.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_corners.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_sec_in_center.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_distance.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_time_in_corners.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_velocity.mat'
 ]
 
 contrasts = [
 '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.con',
 '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center_percent.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms_percent.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms_percent.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_total_distance.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_velocity.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_center_corners_ratio.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_center.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_corners.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_sec_in_center.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_distance.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_time_in_corners.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_velocity.con'
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center_percent.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms_percent.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms_percent.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_total_distance.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_velocity.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_center_corners_ratio.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_center.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_percent_in_corners.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_sec_in_center.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_distance.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_total_time_in_corners.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/OF_velocity.con'
 ]
 
 
@@ -253,4 +253,4 @@ DTI_corr.connect ([
 DTI_corr.write_graph(graph2use='colored', format='svg', simple_form=True)
 # DTI_corr.run(plugin='SLURM', plugin_args={'dont_resubmit_completed_jobs': True,'max_jobs':50, '--mem':16000})
 # plugin_args={'sbatch_args': '--time=24:00:00 -N1 -c2 --mem=40G','max_jobs':200}
-DTI_corr.run('MultiProc', plugin_args={'n_procs': 4})
+DTI_corr.run('MultiProc', plugin_args={'n_procs': 8})
