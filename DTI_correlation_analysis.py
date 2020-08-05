@@ -1,7 +1,7 @@
 # running correlation analysis for OF and EPM using different designs
 # each design represents one varible
-# we have 32 animals in VBM analysis - two contrasts, +ve and -ve correlation
-# hence we have 30 dof, degrees of freedom
+# we have 29 animals in DTI analysis - two contrasts, +ve and -ve correlation
+# hence we have 27 dof, degrees of freedom
 from nipype import config
 cfg = dict(execution={'remove_unnecessary_outputs': False})
 config.update_config(cfg)
@@ -18,7 +18,7 @@ from nipype.pipeline.engine import Workflow, Node, MapNode
 import numpy as np
 import matplotlib.pyplot as plt
 #-------------------------------------------------------------------------------------
-experiment_dir = '/home/in/aeed/Work/October_Acquistion/'
+experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
 
 # map_list=  [    'CHARMED_AD' ,'CHARMED_FA'  ,'CHARMED_FR' , 'CHARMED_IAD', 'CHARMED_MD',  'CHARMED_RD',
 #
@@ -54,7 +54,7 @@ infosource.iterables = [('map_id', map_list)]
 #-----------------------------------------------------------------------------------------------------
 templates = {
 
-             'all_skeleton'       : 'Diffusion_TBSS_Stat/Study_Based_Template/*/{map_id}/All_*_skeletonised.nii.gz'',
+             'all_skeleton'       : 'Diffusion_TBSS_Stat/Study_Based_Template/*/{map_id}/All_*_skeletonised.nii.gz',
              'skeleton_mask'      : 'Diffusion_TBSS_Stat/Study_Based_Template/*/{map_id}/mean_FA_skeleton_mask.nii.gz'
 
  }
@@ -81,7 +81,7 @@ datasink.inputs.substitutions = substitutions
 
 designs = [
 '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.mat',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center.mat',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center.mat',
 # '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center_percent.mat',
 # '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms.mat',
 # '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms_percent.mat',
@@ -100,7 +100,7 @@ designs = [
 
 contrasts = [
 '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.con',
-# '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center.con',
+'/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center.con',
 # '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_center_percent.con',
 # '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms.con',
 # '/media/amr/Amr_4TB/Work/October_Acquistion/DTI_corr/DTI_corr_designs/EPM_time_in_closed_arms_percent.con',
@@ -132,14 +132,14 @@ def palm_corr(in_file, mask, design, contrast):
     -T -tfce2D -noniiclass -n 10 -corrcon -save1-p -o palm_corr_dti")
 
 
-    cl = CommandLine(cmd.format(in_file=in_file, mask=mask, design=design, contrast=contrast ))
+    cl = CommandLine(cmd.format(in_file=in_file, mask=mask, design=design, contrast=contrast))
     cl.run()
     tstat1 = os.path.abspath('palm_corr_dti_vox_tstat_c1.nii.gz')
     tstat2 = os.path.abspath('palm_corr_dti_vox_tstat_c2.nii.gz')
     P_value1 = os.path.abspath('palm_corr_dti_tfce_tstat_fwep_c1.nii.gz')
     P_value2 = os.path.abspath('palm_corr_dti_tfce_tstat_fwep_c2.nii.gz')
 
-    return tstat1, tstat2
+    return tstat1, tstat2, P_value1, P_value2
 
 palm_corr = Node(name = 'palm_corr',
                  interface = Function(input_names = ['in_file', 'mask', 'design', 'contrast'],
@@ -166,7 +166,7 @@ sign_t1.inputs.out_file = 'sign_tstat1.nii.gz'
 
 add_df1 = Node(fsl.BinaryMaths(), name='add_df1')
 add_df1.inputs.operation = 'add'
-add_df1.inputs.operand_value = 30 #32 animals-2contrast = 30 dof
+add_df1.inputs.operand_value = 27 #29 animals-2contrast = 27 dof
 add_df1.inputs.out_file = 'denominator_tstat1.nii.gz'
 
 div_by_denom1 = Node(fsl.BinaryMaths(), name='div_by_denom1')
@@ -192,7 +192,7 @@ sign_t2.inputs.out_file = 'sign_tstat2.nii.gz'
 
 add_df2 = Node(fsl.BinaryMaths(), name='add_df2')
 add_df2.inputs.operation = 'add'
-add_df2.inputs.operand_value = 30 #32 animals-2contrast = 30 dof
+add_df2.inputs.operand_value = 27 #29 animals-2contrast = 27 dof
 add_df2.inputs.out_file = 'denominator_tstat2.nii.gz'
 
 div_by_denom2 = Node(fsl.BinaryMaths(), name='div_by_denom2')
