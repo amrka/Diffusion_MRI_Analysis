@@ -129,7 +129,7 @@ def palm_corr(in_file, mask, design, contrast):
     -i {in_file} \
     -m {mask} \
     -d {design} -t {contrast} \
-    -T -tfce2D -noniiclass -n 10 -corrcon -save1-p -o palm_corr_dti")
+    -T -tfce2D -noniiclass -n 10000 -corrcon -save1-p -o palm_corr_dti")
 
 
     cl = CommandLine(cmd.format(in_file=in_file, mask=mask, design=design, contrast=contrast))
