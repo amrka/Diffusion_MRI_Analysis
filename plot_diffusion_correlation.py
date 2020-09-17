@@ -80,6 +80,7 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
     plt.close()
 
     os.remove(ts)  # delete the file of the voxel values as it is no longer needed
+    os.remove('stat_result.json')
 
 
 # =======================================================================================================
