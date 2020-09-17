@@ -4,8 +4,12 @@
 # the function should return one plot and r value
 # the voxel coordinate should be a list
 
+# the second version (see git log) replaces the voxel coordinates with a P value image
+# it imports the P value image, get the coordinates of the voxel of the highest value
+# then use this coordinates to to the voxel_values
 
-def plot_diffusion_correlation(skelet_4D_image, mat, voxel_coordinate):
+
+def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
     import numpy as np
     import matplotlib.pyplot as plt
     import nipype.interfaces.fsl as fsl
@@ -16,6 +20,16 @@ def plot_diffusion_correlation(skelet_4D_image, mat, voxel_coordinate):
 
     img_basename_no_ext = ntpath.basename(skelet_4D_image)[:-7]
     mat_basename_no_ext = ntpath.basename(mat)[:-4]
+
+# get the coordinates of voxel with highest p value
+    fslstats = fsl.ImageStats()
+    fslstats.inputs.in_file = p_value_image
+    fslstats.inputs.op_string = '-x'  # returns co-ordinates of maximum voxel
+    stat_output = fslstats.run()
+    voxel_coordinate = stat_output.outputs.out_stat
+    # convert coordinates to int from float to suit fslmeants
+    voxel_coordinate = [int(dim) for dim in voxel_coordinate]
+
 
 # we use fslmeants from fsl to get the intensity of the 4D image from a specific coordinate
 # fslmeants -i 4d_image -c 47 73 9
@@ -71,6 +85,8 @@ def plot_diffusion_correlation(skelet_4D_image, mat, voxel_coordinate):
 # =======================================================================================================
 img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
 mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_total_distance.mat'
-voxel = [67, 67, 8]
+# voxel = [67, 67, 8]
+p_value_image = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/CHARMED_FA_P_value1.nii.gz'
 
-plot_diffusion_correlation(img, mat, voxel)
+# plot_diffusion_correlation(img, mat, voxel)
+plot_diffusion_correlation(img, mat, p_value_image)
