@@ -10,6 +10,9 @@ def plot_diffusion_correlation(skelet_4D_image, mat, voxel_coordinate):
     import matplotlib.pyplot as plt
     import nipype.interfaces.fsl as fsl
     import ntpath
+    import sys
+    import matplotlib
+    import os
 
     img_basename_no_ext = ntpath.basename(skelet_4D_image)[:-7]
     mat_basename_no_ext = ntpath.basename(mat)[:-4]
@@ -41,26 +44,33 @@ def plot_diffusion_correlation(skelet_4D_image, mat, voxel_coordinate):
     print("length of voxel_values -> {0}".format(len(voxel_values)))
     print("length of behav_values -> {0}".format(len(behav)))
     if len(voxel_values) != len(behav):
-        print('######ERROR####')
-        break
+        sys.error('######ERROR####')
 
     # the regression line
     coef = np.polyfit(voxel_values, behav, 1)
     poly1d_fn = np.poly1d(coef)
 
     # get the correlation coeeficient
-    correlation_coef = np.corrcoef(voxel_values, behav)[0, 1]
+    # round to 4 digits after the decimal point
+    correlation_coef = round(np.corrcoef(voxel_values, behav)[0, 1], 5)
 
-    plt.plot(voxel_values, behav, 'yo', voxel_values, poly1d_fn(
-        voxel_values), 'k')  # plot the regression line
-    # type the coef on the graph, first two arguments the coordinates of the text
-    plt.text(max(voxel_values), max(behav), "r = {0}".format(correlation_coef))
+    plt.scatter(voxel_values[16:], behav[16:], marker='<', color='b')
+    plt.scatter(voxel_values[:16], behav[:16], marker='o', color='r')
+    plt.plot(voxel_values, poly1d_fn(voxel_values), 'k')  # plot the regression line
+    # type the coef on the graph, first two arguments the coordinates of the text (top left corner)
+    plt.text(min(voxel_values), max(behav), "r $= {0}$".format(
+        correlation_coef), fontname="Arial", style='italic')
 
-    plt.scatter(voxel_values[16:, 0], behav[16:, 1], marker='v')
-    plt.scatter(voxel_values[:16, 0], behav[:16, 1], marker='o')
-
-    plt.savefig("~/Dropbox/thesis/diffusion/DTI_corr/{0}_{1}.svg".format(
+    plt.savefig("/Users/amr/Dropbox/thesis/diffusion/DTI_corr/{0}_{1}.svg".format(
         img_basename_no_ext, mat_basename_no_ext), format='svg')
+    plt.close()
+
+    os.remove(ts)  # delete the file of the voxel values as it is no longer needed
 
 
 # =======================================================================================================
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_total_distance.mat'
+voxel = [67, 67, 8]
+
+plot_diffusion_correlation(img, mat, voxel)
