@@ -67,9 +67,10 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
     # get the correlation coeeficient
     # round to 4 digits after the decimal point
     correlation_coef = round(np.corrcoef(voxel_values, behav)[0, 1], 5)
-
-    plt.scatter(voxel_values[16:], behav[16:], marker='<', color='b')
-    plt.scatter(voxel_values[:16], behav[:16], marker='o', color='r')
+    plt.xticks(fontsize=12, rotation=45)
+    plt.yticks(fontsize=12)
+    plt.scatter(voxel_values[16:], behav[16:], marker='<', color='#e41a1c99')
+    plt.scatter(voxel_values[:16], behav[:16], marker='o', color='#377eb899')
     plt.plot(voxel_values, poly1d_fn(voxel_values), 'k')  # plot the regression line
     # type the coef on the graph, first two arguments the coordinates of the text (top left corner)
     plt.text(min(voxel_values), max(behav), "r $= {0}$".format(
@@ -84,10 +85,10 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
 
 
 # =======================================================================================================
-img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
-mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_total_distance.mat'
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/Diffusion_20/Diffusion_20_AD/All_AD_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.mat'
 # voxel = [67, 67, 8]
-p_value_image = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/CHARMED_FA_P_value1.nii.gz'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_open_to_close_ratio.con_EPM_open_to_close_ratio.mat/Diffusion_20_AD_P_value1.nii.gz'
 
 # plot_diffusion_correlation(img, mat, voxel)
-plot_diffusion_correlation(img, mat, p_value_image)
+plot_diffusion_correlation(img, mat, p_img)
