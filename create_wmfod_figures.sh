@@ -52,7 +52,7 @@ done
 pngappend \
 ${stat_map}_${domain}_render_cropped_21.png + \
 ${stat_map}_${domain}_render_cropped_26.png + \
-${stat_map}_${domain}_render_cropped_31.png + \
+${stat_map}_${domain}_render_cropped_31.png - \
 ${stat_map}_${domain}_render_cropped_36.png + \
 ${stat_map}_${domain}_render_cropped_41.png + \
 ${stat_map}_${domain}_render_cropped_46.png + \
