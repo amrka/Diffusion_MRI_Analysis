@@ -74,7 +74,7 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
     plt.plot(voxel_values, poly1d_fn(voxel_values), 'k')  # plot the regression line
     # type the coef on the graph, first two arguments the coordinates of the text (top left corner)
     plt.text(min(voxel_values), max(behav), "r $= {0}$".format(
-        correlation_coef), fontname="Arial", style='italic')
+        correlation_coef), fontname="Arial", style='italic', fontsize=12)
 
     plt.savefig("/Users/amr/Dropbox/thesis/diffusion/DTI_corr/{0}_{1}.svg".format(
         img_basename_no_ext, mat_basename_no_ext), format='svg')
