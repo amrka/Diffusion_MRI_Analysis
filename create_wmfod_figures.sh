@@ -59,3 +59,6 @@ ${stat_map}_${domain}_render_cropped_46.png + \
 ${stat_map}_${domain}_render_cropped_51.png + \
 ${stat_map}_${domain}_render_cropped_56.png   \
 ${stat_map}_${domain}_output.png
+
+# remove background
+convert ${stat_map}_${domain}_output.png -transparent black ${stat_map}_${domain}_output_no_bg.png
