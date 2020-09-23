@@ -21,9 +21,20 @@ fsleyes='pythonw /Users/amr/anaconda3/bin/fsleyes' #aliases do not work inside s
 wmfod_template='/Users/amr/Dropbox/thesis/registration/wmfod_template.nii.gz'
 wmfod_template_skeleton='/Users/amr/Dropbox/thesis/registration/wmfod_template_skeleton.nii.gz'
 stat_map=`remove_ext $1`
-stat_map_name=`echo ${stat_map} | sed  s/.*_map_id_// | sed s[/palm.*[[`
+
 #behavior or tbss
 domain=$2
+
+if [ ${domain} == 'tbss' ];then
+    stat_map_name=`echo ${stat_map} | sed  s/.*_map_id_// | sed s[/palm.*[[`
+elif [ ${domain} == 'behavior' ];then
+    stat_map_name=`basename ${stat_map}`
+    #get the name of the behav module
+    mod=`dirname ${stat_map} | sed s[/Users/amr/Dropbox/thesis/diffusion/DTI_corr/[[ | sed s[.con.*[[`
+    stat_map_name=${mod}_${stat_map_name}
+fi
+
+
 contrast_no=`echo ${stat_map: -1}`
 
 # colormap -> from the contrast  #red-yellow or blue-lightblue
