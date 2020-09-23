@@ -71,6 +71,7 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
     plt.yticks(fontsize=12)
     plt.scatter(voxel_values[:16], behav[:16], marker='o', color='#377eb899')
     plt.scatter(voxel_values[16:], behav[16:], marker='<', color='#e41a1c99')
+    plt.ylabel("{0}".format(mat_basename_no_ext), fontsize=16, fontname='Arial')
     plt.plot(voxel_values, poly1d_fn(voxel_values), 'k')  # plot the regression line
     # type the coef on the graph, first two arguments the coordinates of the text (top left corner)
     plt.text(min(voxel_values), max(behav), "r $= {0}$".format(
@@ -87,19 +88,60 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
 # =======================================================================================================
 # Diffusion_20
 # AD
-img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/Diffusion_20/Diffusion_20_AD/All_AD_skeletonised.nii.gz'
-mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.mat'
-# voxel = [67, 67, 8]
-p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_open_to_close_ratio.con_EPM_open_to_close_ratio.mat/Diffusion_20_AD_P_value1.nii.gz'
 
-# plot_diffusion_correlation(img, mat, voxel)
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_IAD/All_IAD_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_open_to_close_ratio.con_EPM_open_to_close_ratio.mat/CHARMED_IAD_P_value1.nii.gz'
 plot_diffusion_correlation(img, mat, p_img)
 
 # FA
-img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/Diffusion_20/Diffusion_20_FA/All_Diffusion_20_FA_Study_skeletonised.nii.gz'
-mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_velocity.mat'
-# voxel = [67, 67, 8]
-p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_velocity.con_OF_velocity.mat/Diffusion_20_FA_P_value1.nii.gz'
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_IAD/All_IAD_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms_percent.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_time_in_opened_arms_percent.con_EPM_time_in_opened_arms_percent.mat/CHARMED_IAD_P_value1.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
 
-# plot_diffusion_correlation(img, mat, voxel)
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_IAD/All_IAD_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_time_in_opened_arms.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_time_in_opened_arms.con_EPM_time_in_opened_arms.mat/CHARMED_IAD_P_value1.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
+
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FR/All_FR_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_total_distance.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_total_distance.con_EPM_total_distance.mat/CHARMED_FR_P_value2.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
+
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FR/All_FR_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_velocity.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_velocity.con_EPM_velocity.mat/CHARMED_FR_P_value2.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
+
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_center_corners_ratio.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_center_corners_ratio.con_OF_center_corners_ratio.mat/CHARMED_FA_P_value1.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
+
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_percent_in_center.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_percent_in_center.con_OF_percent_in_center.mat/CHARMED_FA_P_value1.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_total_distance.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/CHARMED_FA_P_value1.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_velocity.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_velocity.con_OF_velocity.mat/CHARMED_FA_P_value1.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
+
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_FA/All_CHARMED_FA_Study_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/OF_velocity.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_velocity.con_OF_velocity.mat/CHARMED_FA_P_value1.nii.gz'
 plot_diffusion_correlation(img, mat, p_img)
