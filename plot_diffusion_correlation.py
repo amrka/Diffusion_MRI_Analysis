@@ -78,15 +78,15 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
     ax.tick_params(axis='x', colors='#ffffffff')
     ax.tick_params(axis='y', colors='#ffffffff')
 
-    plt.xticks(fontsize=12, rotation=45, color='#ffffffff')
-    plt.yticks(fontsize=12, color='#ffffffff')
+    plt.xticks(fontsize=14, rotation=45, color='#ffffffff')
+    plt.yticks(fontsize=14, color='#ffffffff')
     plt.scatter(voxel_values[:16], behav[:16], marker='o', color='#377eb899')
     plt.scatter(voxel_values[16:], behav[16:], marker='<', color='#e41a1c99')
-    plt.ylabel("{0}".format(mat_basename_no_ext), fontsize=16, fontname='Arial', color='#ffffffff')
+    plt.ylabel("{0}".format(mat_basename_no_ext), fontsize=18, fontname='Arial', color='#ffffffff')
     plt.plot(voxel_values, poly1d_fn(voxel_values), color='#ffffffff')  # plot the regression line
     # type the coef on the graph, first two arguments the coordinates of the text (top left corner)
     plt.text(min(voxel_values), max(behav), "r $= {0}$".format(
-        correlation_coef), fontname="Arial", style='italic', fontsize=12, color='#ffffffff')
+        correlation_coef), fontname="Arial", style='italic', fontsize=14, color='#ffffffff')
 
     plt.savefig("/Users/amr/Dropbox/thesis/diffusion/DTI_corr/{0}_{1}.svg".format(
         img_basename_no_ext, mat_basename_no_ext), format='svg')
@@ -99,6 +99,10 @@ def plot_diffusion_correlation(skelet_4D_image, mat, p_value_image):
 # =======================================================================================================
 # Diffusion_20
 # AD
+img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/Diffusion_20/Diffusion_20_AD/All_AD_skeletonised.nii.gz'
+mat = '/Volumes/Amr_1TB/DTI_corr/DTI_corr_designs/EPM_open_to_close_ratio.mat'
+p_img = '/Users/amr/Dropbox/thesis/diffusion/DTI_corr/EPM_open_to_close_ratio.con_EPM_open_to_close_ratio.mat/Diffusion_20_AD_P_value1.nii.gz'
+plot_diffusion_correlation(img, mat, p_img)
 
 
 img = '/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/Study_Based_Template/CHARMED/CHARMED_IAD/All_IAD_skeletonised.nii.gz'
