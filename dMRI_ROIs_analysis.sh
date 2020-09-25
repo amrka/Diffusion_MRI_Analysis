@@ -58,7 +58,7 @@ palm \
 -d /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.mat \
 -t /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.con \
 -o /Users/amr/Dropbox/thesis/diffusion/DTI_ROI/descriptive/results_dMRI_ROIs_descrptive \
--corrcon -fdr -save1-p
+-corrcon -fdr -save1-p -twotail
 
 
 # the default is 10,000 permutations, so no need to assert that
@@ -68,8 +68,15 @@ palm \
 -d /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.mat \
 -t /media/amr/Amr_4TB/Work/October_Acquistion/Diffusion_TBSS_Stat/Design_TBSS.con \
 -o /Users/amr/Dropbox/thesis/diffusion/DTI_ROI/metrics/results_dMRI_ROIs_metrics \
--corrcon -fdr -save1-p
+-corrcon -fdr -save1-p -twotail
 
 
 
-# nothing was significant
+# nothing was significant in descrptive stat
+# in metrics:
+# FA_Diff_20
+# AD_Diff_20
+# FA_CHARMED
+# ODI_NODDI
+# FICVF_NODDI
+# FA_E_DTI_Kurtosis
