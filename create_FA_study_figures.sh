@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# a simple script to create multislice images overlaying stat images on top of wmfod template
+# a simple script to create multislice images overlaying stat images on top of FA study template
 
 # the script takes three arguments from the CommandLine
 # 1 -> stat image with absolute path
@@ -8,8 +8,8 @@
 
 
 # example:
-# >>> create_wmfod_figures.sh \
-# >>> /Users/amr/Dropbox/thesis/diffusion/to_wmfod_template/CHARMED_FA_P_value1.nii.gz \  # stat image with abs path
+# >>> create_FA_study_figures.sh \
+# >>> /Users/amr/Dropbox/thesis/diffusion/to_FA_temp/CHARMED_FA_P_value1.nii.gz \  # stat image with abs path
 # >>> behavior    # domain name
 
 
@@ -54,8 +54,8 @@ for slice_no in {56,51,46,41,36,31,26,21};do
 	${fsleyes} render  \
 	--scene ortho -no   --displaySpace world --hidex --hidey    -vl 36 42 ${slice_no} \
 	--hideCursor   --outfile    ${dir}/${stat_map_name}_${domain}_render_${slice_no}.png   \
-	${wmfod_template} --displayRange 0.04 0.35  \
-	${wmfod_template_skeleton} --cmap green --displayRange 0.2 0.3 \
+	${FA_template} --displayRange 0.04 0.35  \
+	${FA_template_skeleton} --cmap green --displayRange 0.2 0.3 \
 	${stat_map} --displayRange 0.95  1 --cmap ${colormap}
 
 	convert  ${dir}/${stat_map_name}_${domain}_render_${slice_no}.png -crop 320x220+245+185  ${dir}/${stat_map_name}_${domain}_render_cropped_${slice_no}.png
