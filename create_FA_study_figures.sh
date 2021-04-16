@@ -14,7 +14,7 @@
 
 
 mkdir '/Users/amr/Dropbox/thesis/diffusion/to_FA_temp/'
-dir='/Users/amr/Dropbox/thesis/diffusion/to_FA_temp_template/'
+dir='/Users/amr/Dropbox/thesis/diffusion/to_FA_temp/'
 
 
 fsleyes='pythonw /Users/amr/anaconda3/bin/fsleyes' #aliases do not work inside scripts
