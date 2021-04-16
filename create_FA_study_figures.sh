@@ -19,7 +19,7 @@ dir='/Users/amr/Dropbox/thesis/diffusion/to_FA_temp/'
 
 fsleyes='pythonw /Users/amr/anaconda3/bin/fsleyes' #aliases do not work inside scripts
 FA_template='/Users/amr/Dropbox/thesis/registration/FA_Template_Cluster.nii.gz'
-FA_template_skeleton='FA_Template_Cluster_Skeleton.nii.gz'
+FA_template_skeleton='/Users/amr/Dropbox/thesis/registration/FA_Template_Cluster_Skeleton.nii.gz'
 stat_map=`remove_ext $1`
 
 #behavior or tbss
