@@ -76,3 +76,6 @@ ${dir}/${stat_map_name}_${domain}_output_c${contrast_no}.png
 
 # remove background
 convert ${dir}/${stat_map_name}_${domain}_output_c${contrast_no}.png -transparent black ${dir}/${stat_map_name}_${domain}_output_no_bg_c${contrast_no}.png
+
+
+# TODO: fix the script to agree with FA_template
