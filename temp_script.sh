@@ -134,11 +134,13 @@
 # using FA study based template
 # TBSS
 # first get the maps with significant values
-cd /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study
-for img in `ls */palm_tbss/*_tbss_tfce_tstat_fwep_c*.nii.gz`;do
+# change directory to the scripts directory so, ./create_FA_study_figures.sh could work
+cd /Users/amr/Dropbox/SCRIPTS/Diffusion_MRI_Analysis
+for img in `ls /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/*/palm_tbss/*_tbss_tfce_tstat_fwep_c*.nii.gz`;do
     sig=`fslstats $img -p 100`;
     if [[ "${sig}" > 0.949 ]];then
-    	echo $PWD/$img
+    	echo $img
+        ./create_FA_study_figures.sh $img tbss
     fi
 done
 ###################################################################################
