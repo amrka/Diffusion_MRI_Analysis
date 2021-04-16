@@ -87,45 +87,45 @@
 ######################################################################################################
 # Kurtosis
 
-./create_wmfod_figures.sh \
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Kurtosis_E_DTI_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz \
-tbss
-
-
-
-./create_wmfod_figures.sh \
-/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_E_DTI_FA_P_value1.nii.gz \
-behavior
-
-
-./create_wmfod_figures.sh \
-/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_AK_P_value2.nii.gz \
-behavior
-
-
-./create_wmfod_figures.sh \
-/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_AWF_P_value2.nii.gz \
-behavior
-
-
-
-./create_wmfod_figures.sh \
-/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_E_DTI_RD_P_value2.nii.gz \
-behavior
-
-
-
-./create_wmfod_figures.sh \
-/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_MK_P_value2.nii.gz \
-behavior
-
-
-
-./create_wmfod_figures.sh \
-/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_RD_P_value2.nii.gz \
-behavior
-
-
-./create_wmfod_figures.sh \
-/Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_TORT_P_value1.nii.gz \
-behavior
+# ./create_wmfod_figures.sh \
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Kurtosis_E_DTI_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz \
+# tbss
+#
+#
+#
+# ./create_wmfod_figures.sh \
+# /Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_E_DTI_FA_P_value1.nii.gz \
+# behavior
+#
+#
+# ./create_wmfod_figures.sh \
+# /Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_AK_P_value2.nii.gz \
+# behavior
+#
+#
+# ./create_wmfod_figures.sh \
+# /Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_AWF_P_value2.nii.gz \
+# behavior
+#
+#
+#
+# ./create_wmfod_figures.sh \
+# /Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_E_DTI_RD_P_value2.nii.gz \
+# behavior
+#
+#
+#
+# ./create_wmfod_figures.sh \
+# /Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_MK_P_value2.nii.gz \
+# behavior
+#
+#
+#
+# ./create_wmfod_figures.sh \
+# /Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_RD_P_value2.nii.gz \
+# behavior
+#
+#
+# ./create_wmfod_figures.sh \
+# /Users/amr/Dropbox/thesis/diffusion/DTI_corr/OF_total_distance.con_OF_total_distance.mat/Kurtosis_TORT_P_value1.nii.gz \
+# behavior
