@@ -161,5 +161,17 @@ done
 # /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_ODI/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
 # /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_ODI/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
 
-
+##################################################################################
+# I have put all the significant correlation maps in this directory: /Users/amr/Dropbox/thesis/diffusion/DTI_corr/ under
+# multiple subdirectories
 # TODO: continue with behavior
+
+# loop over the images to create the figures
+cd /Users/amr/Dropbox/SCRIPTS/Diffusion_MRI_Analysis
+for img in `ls /Users/amr/Dropbox/thesis/diffusion/DTI_corr/*/*_P_value*.nii.gz`;do
+    sig=`fslstats $img -p 100`;
+    if [[ "${sig}" > 0.949 ]];then
+    	echo $img
+        ./create_FA_study_figures.sh $img behavior
+    fi
+done
