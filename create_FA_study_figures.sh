@@ -49,16 +49,16 @@ fi
 
 
 
-for slice_no in {56,51,46,41,36,31,26,21};do
+for slice_no in {12,10,8,6,4,2};do
 
 	${fsleyes} render  \
-	--scene ortho -no   --displaySpace world --hidex --hidey    -vl 36 42 ${slice_no} \
+	--scene ortho -no   --displaySpace world --hidex --hidey    -vl 52 68 ${slice_no} \
 	--hideCursor   --outfile    ${dir}/${stat_map_name}_${domain}_render_${slice_no}.png   \
-	${FA_template} --displayRange 0.04 0.35  \
-	${FA_template_skeleton} --cmap green --displayRange 0.2 0.3 \
+	${FA_template} --displayRange 3 30  \
+	${FA_template_skeleton} --cmap green --displayRange 15 40 \
 	${stat_map} --displayRange 0.95  1 --cmap ${colormap}
 
-	convert  ${dir}/${stat_map_name}_${domain}_render_${slice_no}.png -crop 320x220+245+185  ${dir}/${stat_map_name}_${domain}_render_cropped_${slice_no}.png
+	convert  ${dir}/${stat_map_name}_${domain}_render_${slice_no}.png -crop 320x220+240+185  ${dir}/${stat_map_name}_${domain}_render_cropped_${slice_no}.png
 
 done
 
@@ -79,3 +79,4 @@ convert ${dir}/${stat_map_name}_${domain}_output_c${contrast_no}.png -transparen
 
 
 # TODO: fix the script to agree with FA_template
+# TODO: stat maps on one line
