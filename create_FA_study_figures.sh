@@ -58,24 +58,22 @@ for slice_no in {12,10,8,6,4,2};do
 	${FA_template_skeleton} --cmap green --displayRange 15 40 \
 	${stat_map} --displayRange 0.95  1 --cmap ${colormap}
 
-	convert  ${dir}/${stat_map_name}_${domain}_render_${slice_no}.png -crop 320x220+240+185  ${dir}/${stat_map_name}_${domain}_render_cropped_${slice_no}.png
+	convert  ${dir}/${stat_map_name}_${domain}_render_${slice_no}.png -crop 320x240+240+180  ${dir}/${stat_map_name}_${domain}_render_cropped_${slice_no}.png
 
 done
 
 
 pngappend \
-${dir}/${stat_map_name}_${domain}_render_cropped_21.png + \
-${dir}/${stat_map_name}_${domain}_render_cropped_26.png + \
-${dir}/${stat_map_name}_${domain}_render_cropped_31.png + \
-${dir}/${stat_map_name}_${domain}_render_cropped_36.png - \
-${dir}/${stat_map_name}_${domain}_render_cropped_41.png + \
-${dir}/${stat_map_name}_${domain}_render_cropped_46.png + \
-${dir}/${stat_map_name}_${domain}_render_cropped_51.png + \
-${dir}/${stat_map_name}_${domain}_render_cropped_56.png   \
+${dir}/${stat_map_name}_${domain}_render_cropped_2.png + \
+${dir}/${stat_map_name}_${domain}_render_cropped_4.png + \
+${dir}/${stat_map_name}_${domain}_render_cropped_6.png + \
+${dir}/${stat_map_name}_${domain}_render_cropped_8.png + \
+${dir}/${stat_map_name}_${domain}_render_cropped_10.png + \
+${dir}/${stat_map_name}_${domain}_render_cropped_12.png  \
 ${dir}/${stat_map_name}_${domain}_output_c${contrast_no}.png
 
 # remove background
-convert ${dir}/${stat_map_name}_${domain}_output_c${contrast_no}.png -transparent black ${dir}/${stat_map_name}_${domain}_output_no_bg_c${contrast_no}.png
+convert ${dir}/${stat_map_name}_${domain}_output_c${contrast_no}.png -transparent black -fuzz 10% ${dir}/${stat_map_name}_${domain}_output_no_bg_c${contrast_no}.png
 
 
 # TODO: fix the script to agree with FA_template
