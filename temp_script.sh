@@ -145,21 +145,21 @@ for img in `ls /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir
 done
 ###################################################################################
 # result: tbss_maps with significant voxels
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_FR/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_IAD/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_IAD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_AD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_MD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_RD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Kurtosis_E_DTI_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Kurtosis_E_DTI_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_FICVF/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_ODI/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
-/Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_ODI/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_FR/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_IAD/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_CHARMED_IAD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_AD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_MD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Diffusion_20_RD/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Kurtosis_E_DTI_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_Kurtosis_E_DTI_FA/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_FICVF/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_ODI/palm_tbss/palm_tbss_tfce_tstat_fwep_c1.nii.gz
+# /Volumes/Amr_1TB/DTI_corr/Diffusion_TBSS_Stat/DTI_TBSS_workingdir_Study_Based_Template/DTI_TBSS_Study/_map_id_NODDI_ODI/palm_tbss/palm_tbss_tfce_tstat_fwep_c2.nii.gz
 
 
 # TODO: continue with behavior
