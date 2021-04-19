@@ -175,3 +175,7 @@ for img in `ls /Users/amr/Dropbox/thesis/diffusion/DTI_corr/*/*_P_value*.nii.gz`
         ./create_FA_study_figures.sh $img behavior
     fi
 done
+
+# the final output exists in: /Users/amr/Dropbox/thesis/diffusion/to_FA_temp/
+# tbss -> /Users/amr/Dropbox/thesis/diffusion/to_FA_temp/tbss
+# behavior -> /Users/amr/Dropbox/thesis/diffusion/to_FA_temp/behavior
